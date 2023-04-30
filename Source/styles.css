@@ -44,6 +44,11 @@ h1{
     margin: 0;
 }
 
+h2{
+    font-size: 60px;
+    
+}
+
 p{
     margin: 0;
     font-weight: 200;
@@ -89,3 +94,18 @@ button:active{
 .socials{
     padding-bottom: 275px;
 }
+
+.logo{
+    height: 77px;
+}
+
+.social{
+    margin: 20px;
+}
+
+.sub-section{
+    display: flex;
+    justify-content: space-around;   /*change this later to space-between or something if the text appears to far out */ 
+    padding: 60px;
+}
+
