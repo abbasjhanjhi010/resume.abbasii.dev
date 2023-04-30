@@ -4,7 +4,6 @@ body{
 
 section{
     background-color: white;
-    border: solid black 1px; 
 }
 
 .hero {
@@ -143,5 +142,26 @@ button:active{
     display: flex;
     justify-content: space-around;
 }
+
+.subtext{
+    font-size: 15px;
+    font-weight: 400;
+
+}
+ .projectImages{
+    margin-top: 20px;
+    width: 300px;
+    /* border-radius: 125px;   for displaying as circle*/        
+ }
+
+ .projectLink{
+    text-decoration: none;
+    color: purple;
+ }
+
+ hr{
+    margin-left: 20px;
+    margin-right: 20px;
+ }
 
 
