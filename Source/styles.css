@@ -45,6 +45,8 @@ h1{
 
 h2{
     font-size: 60px;
+    font-weight: 400;
+    font-family: 'Raleway', sans-serif;
     
 }
 
@@ -102,11 +104,24 @@ button:active{
     margin: 20px;
 }
 
+.abbasIntro{
+    font-weight: 400;
+    justify-content: space-around;    /* introduction passage justify content, remove if any errors occur */
+}
+
 .sub-section{
     display: flex;
-    justify-content: space-around;   /*change this later to space-between or something if the text appears to far out */ 
+    justify-content: space-between;   /*change this later to space-between or something if the text appears to far out */ 
     padding: 60px;
 }
+
+.sub-section-alternative{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 60px;
+}
+
 
 .headshot{
     width: 275px;
@@ -117,4 +132,16 @@ button:active{
     display: flex;
     align-items: center;
 }
+
+.project-card{
+    width: 300px;
+    height: 550px;
+    box-shadow: 5px 5px 20px rgba(77, 143, 179, 0.825);
+}
+
+.project-container{
+    display: flex;
+    justify-content: space-around;
+}
+
 
