@@ -109,3 +109,9 @@ button:active{
     padding: 60px;
 }
 
+.headshot{
+    width: 300px;
+    border-radius: 160px;
+    size: 100px;
+}
+
