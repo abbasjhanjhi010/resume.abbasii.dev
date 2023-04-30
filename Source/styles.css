@@ -164,4 +164,9 @@ button:active{
     margin-right: 20px;
  }
 
+ a{
+    text-decoration: none;
+    color: white;
+ }
+
 
