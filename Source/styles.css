@@ -3,7 +3,8 @@ body{
 }
 
 section{
-    background-color: white;
+    background-color: #1c1d25;
+    color: white;
 }
 
 .hero {
@@ -70,7 +71,7 @@ p{
 }
 
 button{
-    width: 160px;
+    width: 200px;
     height: 60px;
     border-radius: 125px;
     background-color: rgb(81, 234, 219);   /*about me button colour*/
@@ -83,12 +84,12 @@ button{
 }
 
 button:hover{
-    background-color: rgb(69, 238, 221);     /* color on hover*/
+    background-color: rgb(165, 241, 248);     /* color on hover*/
 }
 
 button:active{
     background-color: darkgrey;
-    color: #808080;      /* the buttons colour change when pressed */
+    color: rgb(83, 97, 96);      /* the buttons colour change when pressed */
 }
 
 .socials{
@@ -96,7 +97,9 @@ button:active{
 }
 
 .logo{
-    height: 77px;
+    margin-top: 3.5px;
+    height: 80px;
+    width: 150px;
 }
 
 .social{
@@ -105,7 +108,7 @@ button:active{
 
 .abbasIntro{
     font-weight: 400;
-    justify-content: space-around;    /* introduction passage justify content, remove if any errors occur */
+    font-size: 20px;
 }
 
 .sub-section{
@@ -118,12 +121,14 @@ button:active{
     display: flex;
     flex-direction: column;
     text-align: center;
+    margin-bottom: 20px;
     padding: 60px;
 }
 
 
 .headshot{
     width: 275px;
+    margin-right: 100px;
     border-radius: 150px;
 }
 
@@ -167,6 +172,10 @@ button:active{
  a{
     text-decoration: none;
     color: white;
+ }
+
+ .information{
+    margin-left: 75px;
  }
 
 
