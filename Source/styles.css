@@ -68,6 +68,10 @@ ul{
     font-size: 30px;
 }
 
+ul.show{
+    display:block;
+}
+
 li{
     /* width: 200px; */ 
     text-decoration: none; 
@@ -224,5 +228,49 @@ button:active{
     margin-left: 75px;
  }
 
+.hamburger{
+    display: none;
+}
+.hamburger:focus{
+    outline:0;
+}
+
+
+@media only screen and (max-width: 1000px){
+    .hamburger{
+        display: block;
+        width: 50px;
+        height: 50px;  /* the height and width need to be respecifed after the display:none because it is using an svg file 
+        rather than importing it directly */
+        border:0;
+        background-color: transparent;
+        color:white;
+        margin: 20px;
+        align-self: flex-end;
+    }
+    ul{
+        display: none;
+        background-color: #2c2c30;
+    }
+    
+    nav{
+        align-items: flex-start;
+        background-color: #2c2c30;
+    }
+
+    .logo{
+        display: flex;
+        flex-direction: column-reverse;
+        margin: 0px;
+    }
+
+    .hamburger:hover{
+        background-color: transparent;
+    }
+    
+    .hamburger:active{
+        background-color: transparent;
+    }
+}
 
 
