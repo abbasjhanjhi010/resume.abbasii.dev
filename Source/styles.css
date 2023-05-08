@@ -10,6 +10,12 @@ body{
 }
 
 
+.WIP{
+    font-weight: 800;
+    font-size: 65px;
+    color: white;
+}
+
 section{
     background-color: #1c1d25;
     color: white;
