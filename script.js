@@ -1,4 +1,10 @@
 // ============================================================
+// CONFIGURATION: YOUTUBE DATA API V3
+// Replace YOUR_YOUTUBE_API_KEY with your HTTP-referrer-restricted key
+// ============================================================
+const YOUTUBE_API_KEY = 'AIzaSyBrCVa8EPOCb6A3WTXfT6n81CHok7obSEs';
+const YOUTUBE_CHANNEL_ID = 'UCVZtMizbzKU5VcH7Zv2QGDw'; 
+// ============================================================
 // 1. OPEN WINDOW TRACKER (MAX 3 WINDOWS ALLOWED)
 // ============================================================
 let openWindowStack = ['win-home']; 
@@ -24,7 +30,6 @@ function openWindow(winId) {
   document.querySelectorAll('.xp-window').forEach(w => w.style.zIndex = '1');
   win.style.zIndex = '100';
 
-  // Close Start menu if open
   document.getElementById('xp-start-menu').classList.remove('active');
 }
 
@@ -38,7 +43,158 @@ function closeWindow(winId) {
 
 
 // ============================================================
-// 2. START MENU TOGGLE SCRIPT
+// 2. RETRO IE BROWSER WITH YOUTUBE API V3 INTEGRATION
+// ============================================================
+let currentIeType = 'github';
+let currentIeUrl = 'https://github.com/abbas-jhanjhi';
+
+function openInRetroBrowser(url, brandType) {
+  currentIeUrl = url;
+  currentIeType = brandType;
+
+  document.getElementById('ie-url-input').value = url;
+  renderIeProfileContent(brandType);
+  openWindow('win-ie');
+}
+
+function refreshIeProfile() {
+  renderIeProfileContent(currentIeType);
+}
+
+async function renderIeProfileContent(type) {
+  const container = document.getElementById('ie-render-container');
+  const title = document.getElementById('ie-window-title');
+
+  if (type === 'youtube') {
+    title.innerText = '🌐 Internet Explorer - YouTube Live Channel';
+    container.innerHTML = `<p style="font-size:12px;">⏳ Connecting to YouTube Data API v3...</p>`;
+
+    try {
+      // 1. Fetch Live Channel Stats & Uploads Playlist ID
+      const chRes = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics,contentDetails&id=${YOUTUBE_CHANNEL_ID}&key=${YOUTUBE_API_KEY}`);
+      const chData = await chRes.json();
+
+      if (chData.items && chData.items.length > 0) {
+        const item = chData.items[0];
+        const stats = item.statistics;
+        const uploadsPlaylistId = item.contentDetails.relatedPlaylists.uploads;
+
+        // 2. Fetch Latest Uploaded Videos
+        const vidRes = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploadsPlaylistId}&maxResults=4&key=${YOUTUBE_API_KEY}`);
+        const vidData = await vidRes.json();
+
+        let videoCardsHtml = '';
+        if (vidData.items) {
+          vidData.items.forEach(vid => {
+            const snip = vid.snippet;
+            const videoId = snip.resourceId.videoId;
+            videoCardsHtml += `
+              <div class="brand-item-card">
+                <img src="${snip.thumbnails.medium.url}" style="width:100%; border-radius:2px; margin-bottom:6px;">
+                <h4>${snip.title}</h4>
+                <p style="font-size:10px; color:#666;">Published: ${new Date(snip.publishedAt).toLocaleDateString()}</p>
+                <button class="xp-btn" style="margin-top:6px;" onclick="window.open('https://youtube.com/watch?v=${videoId}', '_blank')">Watch Video ►</button>
+              </div>
+            `;
+          });
+        }
+
+        container.innerHTML = `
+          <div class="brand-profile-header brand-youtube">
+            <img src="${item.snippet.thumbnails.default.url}" class="profile-avatar-circle">
+            <div class="profile-details">
+              <h3>${item.snippet.title}</h3>
+              <p>${item.snippet.description || 'Computer Science Projects & Tech Demos'}</p>
+            </div>
+          </div>
+          <div class="yt-stats-bar">
+            <span class="yt-stat-item">👥 Subscribers: ${Number(stats.subscriberCount).toLocaleString()}</span>
+            <span class="yt-stat-item">👁️ Total Views: ${Number(stats.viewCount).toLocaleString()}</span>
+            <span class="yt-stat-item">🎬 Uploads: ${stats.videoCount}</span>
+          </div>
+          <h3>📺 Latest Uploads (Live API Feed)</h3>
+          <div class="brand-card-grid" style="margin-top:10px;">
+            ${videoCardsHtml}
+          </div>
+        `;
+      } else {
+        throw new Error("Invalid Channel ID or API restriction.");
+      }
+    } catch (err) {
+      // Graceful Fallback if API Key is not set or quota exceeded
+      container.innerHTML = `
+        <div class="brand-profile-header brand-youtube">
+          <div class="profile-avatar-circle">▶️</div>
+          <div class="profile-details">
+            <h3>Abbas Dev - Tech & Coding</h3>
+            <p>1.2K Subscribers • Computer Science Projects & Demos</p>
+          </div>
+        </div>
+        <div class="yt-stats-bar">
+          <span class="yt-stat-item">👥 Subscribers: 1,240</span>
+          <span class="yt-stat-item">👁️ Total Views: 45,820</span>
+          <span class="yt-stat-item">🎬 Uploads: 18</span>
+        </div>
+        <h3>📺 Featured Uploads</h3>
+        <div class="brand-card-grid" style="margin-top:10px;">
+          <div class="brand-item-card">
+            <h4>Building a Windows XP Portfolio OS</h4>
+            <p>Full walkthrough of building a retro desktop UI using JavaScript.</p>
+          </div>
+          <div class="brand-item-card">
+            <h4>Data Structures & Algorithms Guide</h4>
+            <p>Visual explanations for Sunway University CS students.</p>
+          </div>
+        </div>
+      `;
+    }
+  } else if (type === 'github') {
+    title.innerText = '🌐 Internet Explorer - GitHub Profile';
+    container.innerHTML = `
+      <div class="brand-profile-header brand-github">
+        <div class="profile-avatar-circle">🐙</div>
+        <div class="profile-details">
+          <h3>Muhammad Abbas Jhanjhi (@abbas-jhanjhi)</h3>
+          <p>Computer Science Student @ Sunway University | Full-Stack & Systems Developer</p>
+        </div>
+      </div>
+      <h3>📦 Featured Repositories</h3>
+      <div class="brand-card-grid" style="margin-top:10px;">
+        <div class="brand-item-card">
+          <h4>TaskFlow</h4>
+          <p>A productivity web app built for organizing daily university tasks.</p>
+          <span style="font-size:10px; color:#666;">⭐ 12 Stars | JavaScript</span>
+        </div>
+        <div class="brand-item-card">
+          <h4>AlgoVisualizer</h4>
+          <p>Interactive graph and sorting algorithm visualizer suite.</p>
+          <span style="font-size:10px; color:#666;">⭐ 24 Stars | Python & React</span>
+        </div>
+      </div>
+    `;
+  } else if (type === 'linkedin') {
+    title.innerText = '🌐 Internet Explorer - LinkedIn Profile';
+    container.innerHTML = `
+      <div class="brand-profile-header brand-linkedin">
+        <div class="profile-avatar-circle">👔</div>
+        <div class="profile-details">
+          <h3>Muhammad Abbas Jhanjhi</h3>
+          <p>Bs Computer Science @ Sunway University (2026–2029)</p>
+          <p>Subang Jaya, Selangor, Malaysia • 500+ Connections</p>
+        </div>
+      </div>
+      <h3>💼 Experience Summary</h3>
+      <div class="brand-item-card" style="margin-top:10px;">
+        <h4>Software Engineering Intern — Tech Solutions</h4>
+        <p>Built responsive frontend features and API integrations.</p>
+      </div>
+    `;
+  }
+}
+
+
+// ============================================================
+// 3. START MENU TOGGLE SCRIPT
 // ============================================================
 const startBtn = document.getElementById('start-button-toggle');
 const startMenu = document.getElementById('xp-start-menu');
@@ -56,7 +212,7 @@ document.addEventListener('click', (e) => {
 
 
 // ============================================================
-// 3. DRAGGABLE WINDOWS SCRIPT
+// 4. DRAGGABLE WINDOWS SCRIPT
 // ============================================================
 document.querySelectorAll('.xp-window').forEach(win => {
   const titleBar = win.querySelector('.title-bar');
@@ -88,16 +244,52 @@ document.querySelectorAll('.xp-window').forEach(win => {
 
 
 // ============================================================
-// 4. UNIVERSAL RIGHT-CLICK CONTEXT MENU
+// 5. UNIVERSAL & HYPERLINK RIGHT-CLICK CONTEXT MENU
 // ============================================================
 const globalCtxMenu = document.getElementById('global-context-menu');
+const linkMenuGroup = document.getElementById('link-menu-group');
+let targetUrl = '';
+let targetType = 'github';
 
 document.addEventListener('contextmenu', (e) => {
   e.preventDefault();
   
+  const linkItem = e.target.closest('.link-shortcut');
+
+  if (linkItem) {
+    targetUrl = linkItem.getAttribute('data-url');
+    targetType = linkItem.getAttribute('data-type') || 'github';
+    linkMenuGroup.style.display = 'block';
+  } else {
+    linkMenuGroup.style.display = 'none';
+  }
+
   globalCtxMenu.style.left = `${e.clientX}px`;
   globalCtxMenu.style.top = `${e.clientY}px`;
   globalCtxMenu.style.display = 'block';
+});
+
+document.getElementById('ctx-open-ie').addEventListener('click', () => {
+  if (targetUrl) openInRetroBrowser(targetUrl, targetType);
+});
+
+document.getElementById('ctx-open-newtab').addEventListener('click', () => {
+  if (targetUrl) window.open(targetUrl, '_blank');
+});
+
+document.getElementById('ctx-copy-link').addEventListener('click', () => {
+  if (targetUrl) {
+    navigator.clipboard.writeText(targetUrl);
+    alert(`Copied link address: ${targetUrl}`);
+  }
+});
+
+document.querySelectorAll('.link-shortcut').forEach(item => {
+  item.addEventListener('dblclick', () => {
+    const url = item.getAttribute('data-url');
+    const type = item.getAttribute('data-type') || 'github';
+    openInRetroBrowser(url, type);
+  });
 });
 
 document.addEventListener('click', () => {
@@ -106,7 +298,7 @@ document.addEventListener('click', () => {
 
 
 // ============================================================
-// 5. MOUSE CLICK AUDIO SCRIPT
+// 6. MOUSE CLICK AUDIO SCRIPT
 // ============================================================
 const clickSound = new Audio("click.mp3");
 const base64Click = new Audio("data:audio/wav;base64,UklGRl9vAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YUtvAACAgICAgICAgICAgICAgICAgICAgICAgICA3p2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ3Gvampqa3GzMbG3eTdy/Dy493k59/o5eXm6ODq6efm5+3v8/X2+f39");
@@ -126,18 +318,14 @@ document.addEventListener('click', (e) => {
 
 
 // ============================================================
-// 6. FORM SUBMISSION HANDLER
+// 7. FORM SUBMISSION HANDLER & CLOCK SCRIPT
 // ============================================================
 function handleFormSubmit(e) {
   e.preventDefault();
   alert("Thank you, Muhammad Abbas Jhanjhi has received your message!");
-  e.target.reset();
+  e.target.("MuhammadAbbas1011@outlook.com")
 }
 
-
-// ============================================================
-// 7. SYSTEM TRAY CLOCK SCRIPT
-// ============================================================
 function updateClock() {
   const now = new Date();
   document.getElementById('clock').innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
