@@ -1,6 +1,7 @@
 // ============================================================
-// CONFIGURATION: YOUTUBE DATA API V3
+// CONFIGURATION: GITHUB & YOUTUBE DATA
 // ============================================================
+const GITHUB_USERNAME = 'abbas-jhanjhi';
 const YOUTUBE_API_KEY = 'YOUR_YOUTUBE_API_KEY';
 const YOUTUBE_CHANNEL_ID = 'UCVZtMizbzKU5VcH7Zv2QGDw';
 
@@ -44,7 +45,60 @@ function closeWindow(winId) {
 
 
 // ============================================================
-// 2. RETRO IE BROWSER WITH YOUTUBE API V3 INTEGRATION
+// 2. LIVE GITHUB ACTIVITY STICKY NOTE HANDLER ("WHERE I WAS LAST SEEN")
+// ============================================================
+async function fetchGithubActivity() {
+  const container = document.getElementById('sticky-activity-body');
+  if (!container) return;
+
+  try {
+    const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events/public`);
+    if (!response.ok) throw new Error('GitHub API Error');
+
+    const events = await response.json();
+    if (!events || events.length === 0) {
+      container.innerHTML = `<p class="sticky-activity-item">No activity found for the last 2 weeks.</p>`;
+      return;
+    }
+
+    const latestEvent = events[0];
+    const eventDate = new Date(latestEvent.created_at);
+    const now = new Date();
+    const twoWeeksInMs = 14 * 24 * 60 * 60 * 1000;
+
+    // Check if event is within the last 14 days
+    if (now - eventDate > twoWeeksInMs) {
+      container.innerHTML = `<p class="sticky-activity-item">No activity found for the last 2 weeks.</p>`;
+      return;
+    }
+
+    const repoName = latestEvent.repo.name.replace(`${GITHUB_USERNAME}/`, '');
+    let actionDesc = `Active on ${repoName}`;
+
+    if (latestEvent.type === 'PushEvent' && latestEvent.payload.commits && latestEvent.payload.commits.length > 0) {
+      actionDesc = `Pushed to ${repoName}: "${latestEvent.payload.commits[0].message}"`;
+    } else if (latestEvent.type === 'CreateEvent') {
+      actionDesc = `Created ${latestEvent.payload.ref_type || 'repo'} in ${repoName}`;
+    }
+
+    // Relative time formatting
+    const daysAgo = Math.floor((now - eventDate) / (1000 * 60 * 60 * 24));
+    const hoursAgo = Math.floor((now - eventDate) / (1000 * 60 * 60));
+    const timeText = daysAgo > 0 ? `${daysAgo} day${daysAgo > 1 ? 's' : ''} ago` : `${hoursAgo} hour${hoursAgo > 1 ? 's' : ''} ago`;
+
+    container.innerHTML = `
+      <p class="sticky-activity-item">🐙 ${actionDesc}</p>
+      <span class="sticky-time">🕒 ${timeText}</span>
+    `;
+
+  } catch (err) {
+    container.innerHTML = `<p class="sticky-activity-item">No activity found for the last 2 weeks.</p>`;
+  }
+}
+
+
+// ============================================================
+// 3. RETRO IE BROWSER WITH YOUTUBE API INTEGRATION
 // ============================================================
 let currentIeType = 'github';
 let currentIeUrl = 'https://github.com/abbas-jhanjhi';
@@ -195,9 +249,92 @@ async function renderIeProfileContent(type) {
 
 
 // ============================================================
-// 3. EVENT LISTENERS SETUP
+// 4. EVENT LISTENERS & STRICT DRAG BOUNDARY CLAMPING
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
+
+  // Fetch GitHub Sticky Note Activity
+  fetchGithubActivity();
+
+  // Desktop Selection Marquee
+  const desktop = document.getElementById('desktop');
+  const selectionBox = document.getElementById('selection-box');
+  const iconItems = document.querySelectorAll('.desktop-icon-item');
+
+  let isSelecting = false;
+  let startX = 0, startY = 0;
+
+  if (desktop && selectionBox) {
+    desktop.addEventListener('mousedown', (e) => {
+      if (
+        e.target.closest('.xp-window') ||
+        e.target.closest('#taskbar') ||
+        e.target.closest('#xp-start-menu') ||
+        e.target.closest('#global-context-menu') ||
+        e.target.closest('#activity-sticky-note') ||
+        e.button !== 0
+      ) {
+        return;
+      }
+
+      isSelecting = true;
+      const rect = desktop.getBoundingClientRect();
+      startX = e.clientX - rect.left;
+      startY = e.clientY - rect.top;
+
+      selectionBox.style.left = `${startX}px`;
+      selectionBox.style.top = `${startY}px`;
+      selectionBox.style.width = '0px';
+      selectionBox.style.height = '0px';
+      selectionBox.style.display = 'block';
+
+      if (!e.target.closest('.desktop-icon-item')) {
+        iconItems.forEach(icon => icon.classList.remove('selected'));
+      }
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isSelecting) return;
+
+      const rect = desktop.getBoundingClientRect();
+      const currentX = e.clientX - rect.left;
+      const currentY = e.clientY - rect.top;
+
+      const width = Math.abs(currentX - startX);
+      const height = Math.abs(currentY - startY);
+      const left = Math.min(startX, currentX);
+      const top = Math.min(startY, currentY);
+
+      selectionBox.style.left = `${left}px`;
+      selectionBox.style.top = `${top}px`;
+      selectionBox.style.width = `${width}px`;
+      selectionBox.style.height = `${height}px`;
+
+      const boxRect = selectionBox.getBoundingClientRect();
+      iconItems.forEach(icon => {
+        const iconRect = icon.getBoundingClientRect();
+        const isColliding = !(
+          boxRect.right < iconRect.left ||
+          boxRect.left > iconRect.right ||
+          boxRect.bottom < iconRect.top ||
+          boxRect.top > iconRect.bottom
+        );
+
+        if (isColliding) {
+          icon.classList.add('selected');
+        } else {
+          icon.classList.remove('selected');
+        }
+      });
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (isSelecting) {
+        isSelecting = false;
+        selectionBox.style.display = 'none';
+      }
+    });
+  }
 
   // Start Menu Toggle
   const startBtn = document.getElementById('start-button-toggle');
@@ -216,7 +353,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Draggable Windows
+  // ============================================================
+  // STRICT WINDOW DRAG BOUNDARY CLAMPING (CANNOT ESCAPE VIEWPORT)
+  // ============================================================
   document.querySelectorAll('.xp-window').forEach(win => {
     const titleBar = win.querySelector('.title-bar');
     if (!titleBar) return;
@@ -236,10 +375,25 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.addEventListener('mousemove', (e) => {
-      if (isDragging) {
-        win.style.left = `${e.clientX - offsetX}px`;
-        win.style.top = `${e.clientY - offsetY}px`;
-      }
+      if (!isDragging) return;
+
+      const desktopRect = desktop.getBoundingClientRect();
+      const winWidth = win.offsetWidth;
+      const winHeight = win.offsetHeight;
+
+      // Calculate desired position
+      let newLeft = e.clientX - offsetX;
+      let newTop = e.clientY - offsetY;
+
+      // STRICT CLAMPING BOUNDARIES
+      const maxLeft = desktopRect.width - winWidth;
+      const maxTop = desktopRect.height - winHeight;
+
+      newLeft = Math.max(0, Math.min(newLeft, maxLeft));
+      newTop = Math.max(0, Math.min(newTop, maxTop));
+
+      win.style.left = `${newLeft}px`;
+      win.style.top = `${newTop}px`;
     });
 
     document.addEventListener('mouseup', () => {

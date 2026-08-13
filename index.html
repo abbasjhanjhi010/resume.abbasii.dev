@@ -17,10 +17,22 @@
   <!-- DESKTOP WORKSPACE -->
   <div id="desktop">
 
+    <!-- DESKTOP SELECTION MARQUEE BOX -->
+    <div id="selection-box"></div>
+
+    <!-- SEPARATE STICKY NOTE: "WHERE I WAS LAST SEEN" (LIVE GITHUB ACTIVITY) -->
+    <div id="activity-sticky-note" class="sticky-note">
+      <div class="sticky-pin">📌</div>
+      <div class="sticky-header">WHERE I WAS LAST SEEN</div>
+      <div class="sticky-content" id="sticky-activity-body">
+        <p class="sticky-loading">⏳ Checking GitHub activity...</p>
+      </div>
+    </div>
+
     <!-- LOW-RES CHUNKY PIXEL DESKTOP ICONS -->
     <div class="desktop-icons">
       
-      <!-- GITHUB ICON (LOW RES PIXELATED) -->
+      <!-- GITHUB ICON -->
       <div class="desktop-icon-item link-shortcut" data-url="https://github.com/abbas-jhanjhi" data-type="github">
         <svg class="pixel-icon-svg low-res" viewBox="0 0 16 16">
           <rect width="16" height="16" fill="#181a1b"/>
@@ -36,7 +48,7 @@
         <span>GitHub.lnk</span>
       </div>
 
-      <!-- LINKEDIN ICON (LOW RES PIXELATED) -->
+      <!-- LINKEDIN ICON -->
       <div class="desktop-icon-item link-shortcut" data-url="https://linkedin.com/in/abbas-jhanjhi" data-type="linkedin">
         <svg class="pixel-icon-svg low-res" viewBox="0 0 16 16">
           <rect width="16" height="16" fill="#0055b3"/>
@@ -51,7 +63,7 @@
         <span>LinkedIn.lnk</span>
       </div>
 
-      <!-- YOUTUBE ICON (LOW RES PIXELATED) -->
+      <!-- YOUTUBE ICON -->
       <div class="desktop-icon-item link-shortcut" data-url="https://youtube.com/@abbas-jhanjhi" data-type="youtube">
         <svg class="pixel-icon-svg low-res" viewBox="0 0 16 16">
           <rect width="16" height="16" fill="#cc0000"/>
@@ -78,7 +90,7 @@
 
 
     <!-- ============================================================
-         1. HOME WINDOW (Home.html)
+         1. HOME WINDOW (DECLUTTERED & REFINED)
          ============================================================ -->
     <div id="win-home" class="xp-window theme-home active" style="top: 20px; left: 160px; width: 680px;">
       <div class="title-bar" data-win-id="win-home">
@@ -111,9 +123,10 @@
         </div>
 
         <div class="bio-box">
-          <p>I build scalable, modern web applications with functional user interfaces and robust architectures.</p>
+          <p>I build scalable, modern web applications with functional user interfaces and robust system architectures.</p>
         </div>
 
+        <!-- QUICK LAUNCH NAVIGATION BAR -->
         <div class="quick-launch-bar">
           <span class="launch-label">🚀 QUICK LAUNCH:</span>
           <button class="xp-btn launch-btn" onclick="openWindow('win-projects')">⚙️ Open Projects.exe</button>
@@ -122,25 +135,18 @@
           <button class="xp-btn launch-btn" onclick="openWindow('win-contact')">✉️ Open Contact.exe</button>
         </div>
 
-        <div class="grid-2">
-          <div class="card">
-            <h3>📂 Projects Overview</h3>
-            <p>Explore software, productivity apps, and personal algorithms.</p>
-            <button class="xp-btn" onclick="openWindow('win-projects')">Open Projects.exe</button>
-          </div>
-          <div class="card">
-            <h3>⚡ Tech Stack & Skills</h3>
-            <p>View languages, frameworks, and developer tools.</p>
-            <button class="xp-btn" onclick="openWindow('win-skills')">Open TechStack.dll</button>
-          </div>
+        <!-- REPLACED DUPLICATE CARDS WITH NON-REPETITIVE OBJECTIVES -->
+        <div class="card">
+          <h3>🎯 Core Focus & Software Philosophy</h3>
+          <p>Passionate about full-stack engineering, algorithmic efficiency, and crafting intuitive user-centric applications. Currently focusing on modern JavaScript frameworks, systems programming in Python, and database architectures.</p>
         </div>
 
         <div class="cmd-terminal-box">
-          <div class="cmd-bar">C:\WINDOWS\system32\cmd.exe — Recent Activity Feed</div>
+          <div class="cmd-bar">C:\WINDOWS\system32\cmd.exe — System Log</div>
           <div class="cmd-body">
             <p><span class="cmd-prompt">C:\></span> sys_init --verbose</p>
             <p><span class="cmd-ok">[SYS_OK]</span> Portfolio OS v2.0 loaded successfully.</p>
-            <p><span class="cmd-log">[GIT_LOG]</span> Pushed update: YouTube API v3 live channel feed connected.</p>
+            <p><span class="cmd-log">[GIT_LOG]</span> Dynamic drag boundaries and live activity widget enabled.</p>
             <p><span class="cmd-log">[STATUS]</span> Currently pursuing Bs Computer Science @ Sunway University.</p>
             <p><span class="cmd-prompt">C:\></span> <span class="cmd-cursor">_</span></p>
           </div>
@@ -151,9 +157,9 @@
 
 
     <!-- ============================================================
-         2. PROJECTS WINDOW (Projects.exe)
+         2. PROJECTS WINDOW (FIXED LAYOUT)
          ============================================================ -->
-    <div id="win-projects" class="xp-window theme-projects" style="top: 50px; left: 220px; width: 580px;">
+    <div id="win-projects" class="xp-window theme-projects" style="top: 50px; left: 220px; width: 620px;">
       <div class="title-bar" data-win-id="win-projects">
         <div class="title-text">⚙️ C:\Portfolio\Projects.exe</div>
         <div class="window-controls">
@@ -197,7 +203,7 @@
 
 
     <!-- ============================================================
-         3. SKILLS WINDOW (TechStack.dll)
+         3. SKILLS WINDOW
          ============================================================ -->
     <div id="win-skills" class="xp-window theme-skills" style="top: 70px; left: 260px; width: 600px;">
       <div class="title-bar" data-win-id="win-skills">
@@ -278,7 +284,7 @@
 
 
     <!-- ============================================================
-         4. RESUME WINDOW (Resume.txt)
+         4. RESUME WINDOW
          ============================================================ -->
     <div id="win-resume" class="xp-window theme-resume" style="top: 90px; left: 300px; width: 560px;">
       <div class="title-bar" data-win-id="win-resume">
@@ -322,7 +328,7 @@
 
 
     <!-- ============================================================
-         5. GALLERY WINDOW (SpecialEvents.dir)
+         5. GALLERY WINDOW
          ============================================================ -->
     <div id="win-gallery" class="xp-window theme-gallery" style="top: 110px; left: 340px; width: 520px;">
       <div class="title-bar" data-win-id="win-gallery">
@@ -353,7 +359,7 @@
 
 
     <!-- ============================================================
-         6. CONTACT WINDOW (Contact.exe)
+         6. CONTACT WINDOW
          ============================================================ -->
     <div id="win-contact" class="xp-window theme-contact" style="top: 130px; left: 380px; width: 480px;">
       <div class="title-bar" data-win-id="win-contact">
@@ -371,18 +377,18 @@
           <p><strong>Location:</strong> Sunway University, Malaysia</p>
         </div>
 
-        <form class="retro-form" action="https://formspree.io/f/mkjwbkpy" method="POST" onsubmit="handleFormSubmit(event)">
+        <form class="retro-form" action="https://formspree.io/f/YOUR_ACTUAL_FORMSPREE_ID" method="POST" onsubmit="handleFormSubmit(event)">
           <div class="form-group">
             <label for="form-name">Your Name:</label>
-            <input type="text" id="form-name" required placeholder="John Doe">
+            <input type="text" id="form-name" name="name" required placeholder="John Doe">
           </div>
           <div class="form-group">
             <label for="form-email">Your Email:</label>
-            <input type="email" id="form-email" required placeholder="john@example.com">
+            <input type="email" id="form-email" name="email" required placeholder="john@example.com">
           </div>
           <div class="form-group">
             <label for="form-message">Message:</label>
-            <textarea id="form-message" rows="4" required placeholder="Write your message here..."></textarea>
+            <textarea id="form-message" name="message" rows="4" required placeholder="Write your message here..."></textarea>
           </div>
           <button type="submit" class="xp-btn">Send Message 📨</button>
         </form>
@@ -391,7 +397,7 @@
 
 
     <!-- ============================================================
-         7. SECRET EASTER EGG WINDOW (Secret_Notes.txt)
+         7. SECRET EASTER EGG WINDOW
          ============================================================ -->
     <div id="win-secret" class="xp-window theme-resume" style="top: 80px; left: 240px; width: 440px;">
       <div class="title-bar" data-win-id="win-secret">
@@ -414,7 +420,7 @@
 
 
     <!-- ============================================================
-         8. RETRO INTERNET EXPLORER 6 BROWSER WRAPPER (iexplore.exe)
+         8. RETRO INTERNET EXPLORER 6 BROWSER WRAPPER
          ============================================================ -->
     <div id="win-ie" class="xp-window theme-ie" style="top: 40px; left: 140px; width: 680px;">
       <div class="title-bar" data-win-id="win-ie">

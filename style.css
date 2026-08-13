@@ -1,5 +1,5 @@
 /* ============================================================
-   LOCAL W95FA FONT IMPORT & LOW-RES PIXEL GRAPHICS STYLING
+   LOCAL W95FA FONT IMPORT & STICKY NOTE WIDGET STYLING
    ============================================================ */
 @font-face {
   font-family: 'W95FA';
@@ -57,7 +57,71 @@ body {
   padding: 20px;
 }
 
-/* LOW-RES CHUNKY PIXEL DESKTOP ICONS */
+/* ============================================================
+   SEPARATE STICKY NOTE: "WHERE I WAS LAST SEEN"
+   ============================================================ */
+.sticky-note {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 220px;
+  background: #ffffa0;
+  border: 1px solid #d4d440;
+  box-shadow: 4px 4px 10px rgba(0,0,0,0.3);
+  padding: 12px;
+  border-radius: 2px;
+  z-index: 5;
+  transform: rotate(1deg);
+}
+
+.sticky-pin {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+}
+
+.sticky-header {
+  font-size: 11px;
+  font-weight: bold;
+  color: #8b8b00;
+  border-bottom: 1px dashed #cccc00;
+  padding-bottom: 4px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.sticky-content {
+  font-size: 11px;
+  color: #222200;
+  line-height: 1.4;
+}
+
+.sticky-activity-item {
+  font-weight: bold;
+  color: #000;
+  word-wrap: break-word;
+}
+
+.sticky-time {
+  font-size: 10px;
+  color: #666600;
+  margin-top: 4px;
+  display: block;
+}
+
+/* SELECTION MARQUEE */
+#selection-box {
+  position: absolute;
+  border: 1px solid #316ac5;
+  background-color: rgba(49, 106, 197, 0.35);
+  display: none;
+  pointer-events: none;
+  z-index: 99;
+}
+
+/* DESKTOP ICONS */
 .desktop-icons {
   position: absolute;
   top: 20px;
@@ -82,14 +146,14 @@ body {
   padding: 8px 6px;
   border: 1px dashed transparent;
   border-radius: 4px;
+  transition: background 0.1s ease;
 }
 
-.desktop-icon-item:hover {
-  background: rgba(49, 106, 197, 0.65);
-  border-color: #316ac5;
+.desktop-icon-item:hover, .desktop-icon-item.selected {
+  background: rgba(49, 106, 197, 0.65) !important;
+  border-color: #316ac5 !important;
 }
 
-/* ENFORCING CHUNKY BITMAP PIXEL RENDERING */
 .pixel-icon-svg {
   width: 52px;
   height: 52px;
@@ -102,7 +166,7 @@ body {
   image-rendering: crisp-edges !important;
 }
 
-/* HOME PAGE LAYOUT & READABILITY */
+/* HOME PAGE LAYOUT */
 .home-header-row {
   display: flex;
   justify-content: space-between;
@@ -195,6 +259,41 @@ body {
 @keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
+}
+
+/* PROJECTS PAGE FIX */
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.project-item {
+  background: #ffffff;
+  border: 1px solid #7f9db9;
+  border-radius: 4px;
+  padding: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.project-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.project-info h4 {
+  font-size: 15px;
+  color: #002060;
+  margin-bottom: 2px;
+}
+
+.project-info p {
+  font-size: 12px;
+  color: #444;
+  word-wrap: break-word;
 }
 
 .window-body {
@@ -313,9 +412,6 @@ body {
 .nav-btn { background: linear-gradient(180deg, #ffffff 0%, #dcd8c8 100%); border: 1px solid #707070; padding: 3px 10px; border-radius: 3px; font-size: 12px; }
 
 .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; }
-
-.project-list { display: flex; flex-direction: column; gap: 10px; }
-.project-item { background: #ffffff; border: 1px solid #7f9db9; border-radius: 4px; padding: 10px; display: flex; align-items: center; gap: 12px; justify-content: space-between; }
 
 .skills-header-container { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 12px; border-bottom: 1px solid #c2d6ce; padding-bottom: 8px; }
 .skills-legend-key { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; background: #ffffff; border: 1px solid #a0b8b0; padding: 6px 10px; border-radius: 4px; }
