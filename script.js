@@ -70,7 +70,7 @@ async function renderIeProfileContent(type) {
   if (!container || !title) return;
 
   if (type === 'youtube') {
-    title.innerText = '🌐 Internet Explorer - YouTube Live Channel';
+    title.innerText = '🌐 C:\\Program Files\\Internet Explorer\\iexplore.exe - YouTube Channel';
     container.innerHTML = `<p style="font-size:12px;">⏳ Connecting to YouTube Data API v3...</p>`;
 
     try {
@@ -150,7 +150,7 @@ async function renderIeProfileContent(type) {
       `;
     }
   } else if (type === 'github') {
-    title.innerText = '🌐 Internet Explorer - GitHub Profile';
+    title.innerText = '🌐 C:\\Program Files\\Internet Explorer\\iexplore.exe - GitHub Profile';
     container.innerHTML = `
       <div class="brand-profile-header brand-github">
         <div class="profile-avatar-circle">🐙</div>
@@ -174,7 +174,7 @@ async function renderIeProfileContent(type) {
       </div>
     `;
   } else if (type === 'linkedin') {
-    title.innerText = '🌐 Internet Explorer - LinkedIn Profile';
+    title.innerText = '🌐 C:\\Program Files\\Internet Explorer\\iexplore.exe - LinkedIn Profile';
     container.innerHTML = `
       <div class="brand-profile-header brand-linkedin">
         <div class="profile-avatar-circle">👔</div>
