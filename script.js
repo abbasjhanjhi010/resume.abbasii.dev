@@ -119,24 +119,76 @@ async function fetchLatestCombinedActivity() {
 
 
 // ============================================================
-// 3. RETRO IE BROWSER WITH YOUTUBE API INTEGRATION
+// 3. RETRO IE BROWSER WITH HISTORY STACK & REPO INSPECTOR
 // ============================================================
-let currentIeType = 'github';
-let currentIeUrl = 'https://github.com/abbas-jhanjhi';
+let ieHistoryStack = [];
+let ieHistoryIndex = -1;
 
-function openInRetroBrowser(url, brandType) {
-  currentIeUrl = url;
-  currentIeType = brandType;
+function navigateIeTo(url, brandType, isRepo = false, owner = '', repo = '') {
+  if (ieHistoryIndex === -1 || ieHistoryStack[ieHistoryIndex]?.url !== url) {
+    ieHistoryStack = ieHistoryStack.slice(0, ieHistoryIndex + 1);
+    ieHistoryStack.push({ url, brandType, isRepo, owner, repo });
+    ieHistoryIndex = ieHistoryStack.length - 1;
+  }
 
   const urlInput = document.getElementById('ie-url-input');
   if (urlInput) urlInput.value = url;
 
-  renderIeProfileContent(brandType);
+  if (isRepo) {
+    loadGitHubRepoData(owner, repo, 'ie-render-container');
+  } else {
+    renderIeProfileContent(brandType);
+  }
+}
+
+function goBackIe() {
+  if (ieHistoryIndex > 0) {
+    ieHistoryIndex--;
+    const state = ieHistoryStack[ieHistoryIndex];
+    
+    const urlInput = document.getElementById('ie-url-input');
+    if (urlInput) urlInput.value = state.url;
+
+    if (state.isRepo) {
+      loadGitHubRepoData(state.owner, state.repo, 'ie-render-container');
+    } else {
+      renderIeProfileContent(state.brandType);
+    }
+  }
+}
+
+function goForwardIe() {
+  if (ieHistoryIndex < ieHistoryStack.length - 1) {
+    ieHistoryIndex++;
+    const state = ieHistoryStack[ieHistoryIndex];
+
+    const urlInput = document.getElementById('ie-url-input');
+    if (urlInput) urlInput.value = state.url;
+
+    if (state.isRepo) {
+      loadGitHubRepoData(state.owner, state.repo, 'ie-render-container');
+    } else {
+      renderIeProfileContent(state.brandType);
+    }
+  }
+}
+
+function openInRetroBrowser(url, brandType) {
+  navigateIeTo(url, brandType);
   openWindow('win-ie');
 }
 
 function refreshIeProfile() {
-  renderIeProfileContent(currentIeType);
+  if (ieHistoryIndex >= 0) {
+    const state = ieHistoryStack[ieHistoryIndex];
+    if (state.isRepo) {
+      loadGitHubRepoData(state.owner, state.repo, 'ie-render-container');
+    } else {
+      renderIeProfileContent(state.brandType);
+    }
+  } else {
+    renderIeProfileContent('github');
+  }
 }
 
 async function renderIeProfileContent(type) {
@@ -225,8 +277,9 @@ async function renderIeProfileContent(type) {
       `;
     }
   } else if (type === 'github') {
-    title.innerText = '🌐 C:\\Program Files\\Internet Explorer\\iexplore.exe - GitHub Profile';
-    container.innerHTML = `
+  title.innerText = '🌐 C:\\Program Files\\Internet Explorer\\iexplore.exe - GitHub Profile';
+  container.innerHTML = `
+    <div style="padding: 10px; font-family: Tahoma, sans-serif;">
       <div class="brand-profile-header brand-github">
         <div class="profile-avatar-circle">🐙</div>
         <div class="profile-details">
@@ -234,21 +287,29 @@ async function renderIeProfileContent(type) {
           <p>Computer Science Student @ Sunway University | Full-Stack & Systems Developer</p>
         </div>
       </div>
+      
+      <div style="margin: 10px 0; text-align: right;">
+        <a class="xp-btn" href="https://github.com/abbas-jhanjhi" target="_blank" rel="noopener noreferrer" style="font-weight: bold; padding: 4px 10px; text-decoration: none;">
+          🌐 Open GitHub Profile on Web ►
+        </a>
+      </div>
+
       <h3>📦 Featured Repositories</h3>
       <div class="brand-card-grid" style="margin-top:10px;">
         <div class="brand-item-card">
-          <h4>TaskFlow</h4>
-          <p>A productivity web app built for organizing daily university tasks.</p>
-          <span style="font-size:10px; color:#666;">⭐ 12 Stars | JavaScript</span>
+          <h4>Athena Cafe</h4>
+          <p>A productivity web app inspired by a Turkish Greek coffee shop.</p>
+          <button class="xp-btn" onclick="navigateIeTo('https://github.com/MuhammadAbbas010/Athena-Cafe', 'github', true, 'MuhammadAbbas010', 'Athena-Cafe')">Inspect Repo</button>
         </div>
         <div class="brand-item-card">
-          <h4>AlgoVisualizer</h4>
-          <p>Interactive graph and sorting algorithm visualizer suite.</p>
-          <span style="font-size:10px; color:#666;">⭐ 24 Stars | Python & React</span>
+          <h4>Python Content Calendar</h4>
+          <p>Text-based social media planner and analytics tool.</p>
+          <button class="xp-btn" onclick="navigateIeTo('https://github.com/MuhammadAbbas010/CSC1024-Social-Media-Planner', 'github', true, 'MuhammadAbbas010', 'CSC1024-Social-Media-Planner')">Inspect Repo</button>
         </div>
       </div>
-    `;
-  } else if (type === 'linkedin') {
+    </div>
+  `;
+} else if (type === 'linkedin') {
     title.innerText = '🌐 C:\\Program Files\\Internet Explorer\\iexplore.exe - LinkedIn Profile';
     container.innerHTML = `
       <div class="brand-profile-header brand-linkedin">
@@ -481,9 +542,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ============================================================
-  // NEW LINK-SHORTCUT CLICK LISTENER (GITHUB REPO INSPECTOR)
-  // ============================================================
+  // LINK-SHORTCUT CLICK LISTENER (GITHUB REPO INSPECTOR)
   document.addEventListener('click', function (e) {
     const shortcut = e.target.closest('.link-shortcut');
     if (shortcut && !e.target.closest('#global-context-menu')) {
@@ -493,18 +552,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const cleanPath = rawUrl.replace(/^https?:\/\/(www\.)?github\.com\//, '');
         const parts = cleanPath.split('/').filter(Boolean);
         
-        // If it points to a specific repository (owner/repo)
         if (parts.length >= 2) {
           e.preventDefault();
           const owner = parts[0];
           const repo = parts[1];
 
           openWindow('win-ie');
-
-          const ieInput = document.getElementById('ie-url-input');
-          if (ieInput) ieInput.value = rawUrl;
-
-          loadGitHubRepoData(owner, repo, 'ie-render-container');
+          navigateIeTo(rawUrl, 'github', true, owner, repo);
         }
       }
     }
@@ -568,17 +622,19 @@ async function handleFormSubmit(e) {
 }
 
 
-// Github Page API Refreshing 
-// Github Page API Refreshing (Updated with README, Contributors & High-Vis Button)
+// ============================================================
+// GITHUB REPO INSPECTOR (SIDE-BY-SIDE DUAL COLUMN LAYOUT) - Now uses the back button on UI directly 
+// ============================================================
 async function loadGitHubRepoData(owner, repo, windowContentId) {
   const container = document.getElementById(windowContentId);
-  container.innerHTML = `<p class="sticky-loading" style="padding:15px;">⏳ Fetching live repository data, contributors, and README from GitHub...</p>`;
+  
+  document.body.classList.add('xp-loading');
+  container.innerHTML = `<p class="sticky-loading" style="padding: 15px; font-family: Tahoma;">⏳ Connecting to GitHub REST API...</p>`;
 
   try {
-    // Parallel API Requests for performance
     const [repoRes, commitsRes, contribRes, readmeRes] = await Promise.all([
       fetch(`https://api.github.com/repos/${owner}/${repo}`),
-      fetch(`https://api.github.com/repos/${owner}/${repo}/commits?per_page=3`),
+      fetch(`https://api.github.com/repos/${owner}/${repo}/commits?per_page=5`),
       fetch(`https://api.github.com/repos/${owner}/${repo}/contributors?per_page=5`),
       fetch(`https://api.github.com/repos/${owner}/${repo}/readme`, {
         headers: { 'Accept': 'application/vnd.github.raw+json' }
@@ -591,71 +647,71 @@ async function loadGitHubRepoData(owner, repo, windowContentId) {
     const contribData = contribRes.ok ? await contribRes.json() : [];
     const readmeData = readmeRes.ok ? await readmeRes.text() : 'No README.md found in repository.';
 
-    // Sanitize README HTML tags to avoid breaking the XP layout
-    const cleanReadme = readmeData
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+    const cleanReadme = readmeData.replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-    // Build Contributors HTML
     const contribHtml = contribData.length > 0 ? contribData.map(c => `
-      <a href="${c.html_url}" target="_blank" style="display:inline-flex; align-items:center; gap:4px; background:#fff; border:1px solid #7f9db9; padding:2px 6px; text-decoration:none; color:#000; font-size:11px;">
-        <img src="${c.avatar_url}" style="width:14px; height:14px; border-radius:50%;">
+      <a href="${c.html_url}" target="_blank" style="display:inline-flex; align-items:center; gap:4px; background:#fff; border:1px solid #7f9db9; padding:1px 5px; text-decoration:none; color:#000; font-size:10px;">
+        <img src="${c.avatar_url}" style="width:12px; height:12px; border-radius:50%;">
         <strong>${c.login}</strong> (${c.contributions})
       </a>
     `).join(' ') : '<span>No contributors data.</span>';
 
-    // Render Window Body
     container.innerHTML = `
-      <div style="padding: 10px; font-family: Tahoma, sans-serif;">
+      <div style="padding: 8px; font-family: Tahoma, sans-serif;">
         
-        <!-- HIGH VISIBILITY TOP ACTION BAR -->
-        <div style="background: linear-gradient(to bottom, #225ad2, #00309c); padding: 8px 12px; border-radius: 3px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);">
-          <span style="color: #fff; font-weight: bold; font-size: 12px;">🔗 Official Repository Source</span>
+        <!-- TOP CALL-TO-ACTION BAR (CLEAN RIGHT ALIGNED) -->
+        <div style="background: linear-gradient(to bottom, #0058e6, #00309c); padding: 6px 10px; border-radius: 3px; display: flex; justify-content: flex-end; align-items: center; margin-bottom: 8px; border: 1px solid #002080;">
           <a class="xp-btn" href="${repoData.html_url}" target="_blank" rel="noopener noreferrer" 
-             style="background: linear-gradient(to bottom, #39d114, #1f8008); color: white; font-weight: bold; border: 1px solid #144e04; padding: 5px 14px; text-decoration: none; border-radius: 3px; text-shadow: 1px 1px 1px #000; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+             style="background: linear-gradient(to bottom, #39d114, #1f8008); color: white; font-weight: bold; border: 1px solid #144e04; padding: 4px 12px; text-decoration: none; border-radius: 2px; text-shadow: 1px 1px 1px #000;">
              🚀 Open Live Repo on GitHub.com ►
           </a>
         </div>
 
-        <!-- REPO DETAILS -->
-        <div class="card" style="margin-bottom: 10px;">
-          <h3 style="margin:0 0 6px 0;">📦 ${repoData.name} <span style="font-size: 11px; color: #666;">(${repoData.visibility})</span></h3>
-          <p style="margin:0 0 8px 0; font-size: 12px;">${repoData.description || 'No description provided.'}</p>
-          <div style="font-size: 11px; background: #f0f0f0; padding: 6px; border: 1px inset #d0d0d0; display: flex; gap: 12px; margin-bottom: 8px;">
+        <!-- REPO SUMMARY CARD -->
+        <div class="card" style="margin-bottom: 8px; padding: 8px;">
+          <h3 style="margin:0 0 4px 0; font-size: 14px;">📦 ${repoData.name} <span style="font-size: 10px; color: #666;">(${repoData.visibility})</span></h3>
+          <p style="margin:0 0 6px 0; font-size: 11px; line-height: 1.3;">${repoData.description || 'No description provided.'}</p>
+          <div style="font-size: 10px; background: #f0f0f0; padding: 4px; border: 1px inset #d0d0d0; display: flex; gap: 10px; margin-bottom: 6px;">
             <span>⭐ Stars: <strong>${repoData.stargazers_count}</strong></span>
             <span>🍴 Forks: <strong>${repoData.forks_count}</strong></span>
             <span>🛠️ Language: <strong>${repoData.language || 'N/A'}</strong></span>
           </div>
 
-          <!-- CONTRIBUTORS -->
-          <div style="font-size: 11px;">
-            <strong style="display:block; margin-bottom:4px;">👥 Contributors:</strong>
-            <div style="display:flex; flex-wrap:wrap; gap:4px;">${contribHtml}</div>
+          <div style="font-size: 10px;">
+            <strong>👥 Contributors:</strong> ${contribHtml}
           </div>
         </div>
 
-        <!-- GIT COMMIT TERMINAL -->
-        <div class="cmd-terminal-box" style="margin-bottom: 10px;">
-          <div class="cmd-bar">Git Commit Log — Latest Updates</div>
-          <div class="cmd-body" style="font-size: 11px; max-height: 80px; overflow-y: auto;">
-            ${commitsData.map(c => `
-              <p style="margin: 2px 0;">
-                <span class="cmd-prompt">${c.sha.substring(0, 7)}:</span> ${c.commit.message} 
-                <br><small style="color: #888;">by ${c.commit.author.name} on ${new Date(c.commit.author.date).toLocaleDateString()}</small>
-              </p>
-            `).join('')}
+        <!-- SIDE-BY-SIDE DUAL COLUMN LAYOUT -->
+        <div style="display: flex; gap: 8px; height: 230px;">
+          
+          <!-- LEFT COLUMN: BLUE (EXPANDED README) -->
+          <div class="cmd-terminal-box" style="flex: 2.2; display: flex; flex-direction: column; height: 100%; border: 1px solid #0055b3;">
+            <div class="cmd-bar" style="background: linear-gradient(to right, #0055b3, #3385ff);">📄 README.md Preview</div>
+            <div class="cmd-body" style="flex: 1; font-size: 10px; overflow-y: auto; white-space: pre-wrap; font-family: monospace; color: #d0d0d0; padding: 6px;">${cleanReadme}</div>
           </div>
-        </div>
 
-        <!-- README PREVIEW TERMINAL -->
-        <div class="cmd-terminal-box">
-          <div class="cmd-bar">📄 README.md Preview</div>
-          <div class="cmd-body" style="font-size: 11px; max-height: 140px; overflow-y: auto; white-space: pre-wrap; font-family: monospace; color: #d0d0d0;">${cleanReadme}</div>
+          <!-- RIGHT COLUMN: GREEN (SMALLER SQUEEZED COMMIT LOG) -->
+          <div class="cmd-terminal-box" style="flex: 0.8; display: flex; flex-direction: column; height: 100%; border: 1px solid #1f8008;">
+            <div class="cmd-bar" style="background: linear-gradient(to right, #1f8008, #39d114);">📜 Commit Log</div>
+            <div class="cmd-body" style="flex: 1; font-size: 10px; overflow-y: auto; color: #00ff00; padding: 6px;">
+              ${commitsData.map(c => `
+                <div style="margin-bottom: 6px; border-bottom: 1px dashed #333; padding-bottom: 4px;">
+                  <span class="cmd-prompt" style="color:#ffff00;">> ${c.sha.substring(0, 7)}</span>
+                  <div style="color: #fff; margin: 2px 0; word-break: break-word;">${c.commit.message}</div>
+                  <small style="color: #888; font-size: 9px;">${c.commit.author.name} • ${new Date(c.commit.author.date).toLocaleDateString()}</small>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
         </div>
 
       </div>
     `;
   } catch (error) {
     container.innerHTML = `<p style="color: red; padding: 15px;">❌ Failed to load repo data: ${error.message}</p>`;
+  } finally {
+    document.body.classList.remove('xp-loading');
   }
 }

@@ -500,9 +500,7 @@ body {
 .tab-btn { background: linear-gradient(180deg, #3c81e3 0%, #1b58b8 100%); color: white; border: 1px solid #0c3679; border-radius: 3px; padding: 3px 10px; font-size: 12px; }
 .system-tray { color: white; padding: 0 12px; font-size: 11px; border-left: 1px solid #104393; height: 100%; display: flex; align-items: center; background: #0b3d91; }
 
-
-/* removing blue underline from <a> links */
-.hyperlink{
-  color:#000;
-  text-decoration:none;
+/* Windows XP Working Cursor */
+body.xp-loading, body.xp-loading * {
+  cursor: wait !important; /* Standard loading hourglass/pointer */
 }
