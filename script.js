@@ -1,9 +1,9 @@
 // ============================================================
 // CONFIGURATION: YOUTUBE DATA API V3
-// Replace YOUR_YOUTUBE_API_KEY with your HTTP-referrer-restricted key
 // ============================================================
-const YOUTUBE_API_KEY = 'AIzaSyBrCVa8EPOCb6A3WTXfT6n81CHok7obSEs';
-const YOUTUBE_CHANNEL_ID = 'UCVZtMizbzKU5VcH7Zv2QGDw'; 
+const YOUTUBE_API_KEY = 'YOUR_YOUTUBE_API_KEY';
+const YOUTUBE_CHANNEL_ID = 'UCVZtMizbzKU5VcH7Zv2QGDw';
+
 // ============================================================
 // 1. OPEN WINDOW TRACKER (MAX 3 WINDOWS ALLOWED)
 // ============================================================
@@ -30,7 +30,8 @@ function openWindow(winId) {
   document.querySelectorAll('.xp-window').forEach(w => w.style.zIndex = '1');
   win.style.zIndex = '100';
 
-  document.getElementById('xp-start-menu').classList.remove('active');
+  const startMenuEl = document.getElementById('xp-start-menu');
+  if (startMenuEl) startMenuEl.classList.remove('active');
 }
 
 function closeWindow(winId) {
@@ -52,7 +53,9 @@ function openInRetroBrowser(url, brandType) {
   currentIeUrl = url;
   currentIeType = brandType;
 
-  document.getElementById('ie-url-input').value = url;
+  const urlInput = document.getElementById('ie-url-input');
+  if (urlInput) urlInput.value = url;
+
   renderIeProfileContent(brandType);
   openWindow('win-ie');
 }
@@ -64,13 +67,13 @@ function refreshIeProfile() {
 async function renderIeProfileContent(type) {
   const container = document.getElementById('ie-render-container');
   const title = document.getElementById('ie-window-title');
+  if (!container || !title) return;
 
   if (type === 'youtube') {
     title.innerText = '🌐 Internet Explorer - YouTube Live Channel';
     container.innerHTML = `<p style="font-size:12px;">⏳ Connecting to YouTube Data API v3...</p>`;
 
     try {
-      // 1. Fetch Live Channel Stats & Uploads Playlist ID
       const chRes = await fetch(`https://www.googleapis.com/youtube/v3/channels?part=snippet,statistics,contentDetails&id=${YOUTUBE_CHANNEL_ID}&key=${YOUTUBE_API_KEY}`);
       const chData = await chRes.json();
 
@@ -79,12 +82,11 @@ async function renderIeProfileContent(type) {
         const stats = item.statistics;
         const uploadsPlaylistId = item.contentDetails.relatedPlaylists.uploads;
 
-        // 2. Fetch Latest Uploaded Videos
         const vidRes = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${uploadsPlaylistId}&maxResults=4&key=${YOUTUBE_API_KEY}`);
         const vidData = await vidRes.json();
 
         let videoCardsHtml = '';
-        if (vidData.items) {
+        if (vidData.items && vidData.items.length > 0) {
           vidData.items.forEach(vid => {
             const snip = vid.snippet;
             const videoId = snip.resourceId.videoId;
@@ -118,16 +120,15 @@ async function renderIeProfileContent(type) {
           </div>
         `;
       } else {
-        throw new Error("Invalid Channel ID or API restriction.");
+        throw new Error("No channel data returned");
       }
     } catch (err) {
-      // Graceful Fallback if API Key is not set or quota exceeded
       container.innerHTML = `
         <div class="brand-profile-header brand-youtube">
           <div class="profile-avatar-circle">▶️</div>
           <div class="profile-details">
             <h3>Abbas Dev - Tech & Coding</h3>
-            <p>1.2K Subscribers • Computer Science Projects & Demos</p>
+            <p>Computer Science Projects & Demos</p>
           </div>
         </div>
         <div class="yt-stats-bar">
@@ -194,141 +195,154 @@ async function renderIeProfileContent(type) {
 
 
 // ============================================================
-// 3. START MENU TOGGLE SCRIPT
+// 3. EVENT LISTENERS SETUP
 // ============================================================
-const startBtn = document.getElementById('start-button-toggle');
-const startMenu = document.getElementById('xp-start-menu');
+document.addEventListener('DOMContentLoaded', () => {
 
-startBtn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  startMenu.classList.toggle('active');
-});
+  // Start Menu Toggle
+  const startBtn = document.getElementById('start-button-toggle');
+  const startMenu = document.getElementById('xp-start-menu');
 
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('#xp-start-menu') && !e.target.closest('#start-button-toggle')) {
-    startMenu.classList.remove('active');
+  if (startBtn && startMenu) {
+    startBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      startMenu.classList.toggle('active');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#xp-start-menu') && !e.target.closest('#start-button-toggle')) {
+        startMenu.classList.remove('active');
+      }
+    });
   }
-});
 
+  // Draggable Windows
+  document.querySelectorAll('.xp-window').forEach(win => {
+    const titleBar = win.querySelector('.title-bar');
+    if (!titleBar) return;
 
-// ============================================================
-// 4. DRAGGABLE WINDOWS SCRIPT
-// ============================================================
-document.querySelectorAll('.xp-window').forEach(win => {
-  const titleBar = win.querySelector('.title-bar');
-  let isDragging = false;
-  let offsetX = 0, offsetY = 0;
+    let isDragging = false;
+    let offsetX = 0, offsetY = 0;
 
-  titleBar.addEventListener('mousedown', (e) => {
-    if (e.target.classList.contains('win-btn') || e.button !== 0) return;
+    titleBar.addEventListener('mousedown', (e) => {
+      if (e.target.classList.contains('win-btn') || e.button !== 0) return;
 
-    isDragging = true;
-    offsetX = e.clientX - win.offsetLeft;
-    offsetY = e.clientY - win.offsetTop;
+      isDragging = true;
+      offsetX = e.clientX - win.offsetLeft;
+      offsetY = e.clientY - win.offsetTop;
 
-    document.querySelectorAll('.xp-window').forEach(w => w.style.zIndex = '1');
-    win.style.zIndex = '100';
+      document.querySelectorAll('.xp-window').forEach(w => w.style.zIndex = '1');
+      win.style.zIndex = '100';
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        win.style.left = `${e.clientX - offsetX}px`;
+        win.style.top = `${e.clientY - offsetY}px`;
+      }
+    });
+
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
   });
 
-  document.addEventListener('mousemove', (e) => {
-    if (isDragging) {
-      win.style.left = `${e.clientX - offsetX}px`;
-      win.style.top = `${e.clientY - offsetY}px`;
+  // Context Menu Handling
+  const globalCtxMenu = document.getElementById('global-context-menu');
+  const linkMenuGroup = document.getElementById('link-menu-group');
+  let targetUrl = '';
+  let targetType = 'github';
+
+  if (globalCtxMenu) {
+    document.addEventListener('contextmenu', (e) => {
+      e.preventDefault();
+      
+      const linkItem = e.target.closest('.link-shortcut');
+
+      if (linkItem && linkMenuGroup) {
+        targetUrl = linkItem.getAttribute('data-url') || '';
+        targetType = linkItem.getAttribute('data-type') || 'github';
+        linkMenuGroup.style.display = 'block';
+      } else if (linkMenuGroup) {
+        linkMenuGroup.style.display = 'none';
+      }
+
+      globalCtxMenu.style.left = `${e.clientX}px`;
+      globalCtxMenu.style.top = `${e.clientY}px`;
+      globalCtxMenu.style.display = 'block';
+    });
+
+    const ieOpt = document.getElementById('ctx-open-ie');
+    if (ieOpt) {
+      ieOpt.addEventListener('click', () => {
+        if (targetUrl) openInRetroBrowser(targetUrl, targetType);
+      });
+    }
+
+    const tabOpt = document.getElementById('ctx-open-newtab');
+    if (tabOpt) {
+      tabOpt.addEventListener('click', () => {
+        if (targetUrl) window.open(targetUrl, '_blank');
+      });
+    }
+
+    const copyOpt = document.getElementById('ctx-copy-link');
+    if (copyOpt) {
+      copyOpt.addEventListener('click', () => {
+        if (targetUrl) {
+          navigator.clipboard.writeText(targetUrl);
+          alert(`Copied link address: ${targetUrl}`);
+        }
+      });
+    }
+
+    document.addEventListener('click', () => {
+      globalCtxMenu.style.display = 'none';
+    });
+  }
+
+  // Desktop Icon Double Clicks
+  document.querySelectorAll('.link-shortcut').forEach(item => {
+    item.addEventListener('dblclick', () => {
+      const url = item.getAttribute('data-url');
+      const type = item.getAttribute('data-type') || 'github';
+      openInRetroBrowser(url, type);
+    });
+  });
+
+  // Click Sound Handler
+  const clickSound = new Audio("click.mp3");
+  const base64Click = new Audio("data:audio/wav;base64,UklGRl9vAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YUtvAACAgICAgICAgICAgICAgICAgICAgICAgICA3p2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ3Gvampqa3GzMbG3eTdy/Dy493k59/o5eXm6ODq6efm5+3v8/X2+f39");
+  clickSound.volume = 0.4;
+  base64Click.volume = 0.3;
+
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('button, .card, .win-btn, .nav-btn, .tab-btn, .project-item, .skill-card-pixel, .desktop-icon-item, .menu-row, .start-item, .start-right-item')) {
+      clickSound.currentTime = 0;
+      clickSound.play().catch(() => {
+        base64Click.currentTime = 0;
+        base64Click.play().catch(() => {});
+      });
     }
   });
 
-  document.addEventListener('mouseup', () => {
-    isDragging = false;
-  });
+  // Start Clock
+  updateClock();
+  setInterval(updateClock, 1000);
 });
 
-
-// ============================================================
-// 5. UNIVERSAL & HYPERLINK RIGHT-CLICK CONTEXT MENU
-// ============================================================
-const globalCtxMenu = document.getElementById('global-context-menu');
-const linkMenuGroup = document.getElementById('link-menu-group');
-let targetUrl = '';
-let targetType = 'github';
-
-document.addEventListener('contextmenu', (e) => {
-  e.preventDefault();
-  
-  const linkItem = e.target.closest('.link-shortcut');
-
-  if (linkItem) {
-    targetUrl = linkItem.getAttribute('data-url');
-    targetType = linkItem.getAttribute('data-type') || 'github';
-    linkMenuGroup.style.display = 'block';
-  } else {
-    linkMenuGroup.style.display = 'none';
+// Clock Function
+function updateClock() {
+  const clockEl = document.getElementById('clock');
+  if (clockEl) {
+    const now = new Date();
+    clockEl.innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   }
+}
 
-  globalCtxMenu.style.left = `${e.clientX}px`;
-  globalCtxMenu.style.top = `${e.clientY}px`;
-  globalCtxMenu.style.display = 'block';
-});
-
-document.getElementById('ctx-open-ie').addEventListener('click', () => {
-  if (targetUrl) openInRetroBrowser(targetUrl, targetType);
-});
-
-document.getElementById('ctx-open-newtab').addEventListener('click', () => {
-  if (targetUrl) window.open(targetUrl, '_blank');
-});
-
-document.getElementById('ctx-copy-link').addEventListener('click', () => {
-  if (targetUrl) {
-    navigator.clipboard.writeText(targetUrl);
-    alert(`Copied link address: ${targetUrl}`);
-  }
-});
-
-document.querySelectorAll('.link-shortcut').forEach(item => {
-  item.addEventListener('dblclick', () => {
-    const url = item.getAttribute('data-url');
-    const type = item.getAttribute('data-type') || 'github';
-    openInRetroBrowser(url, type);
-  });
-});
-
-document.addEventListener('click', () => {
-  globalCtxMenu.style.display = 'none';
-});
-
-
-// ============================================================
-// 6. MOUSE CLICK AUDIO SCRIPT
-// ============================================================
-const clickSound = new Audio("click.mp3");
-const base64Click = new Audio("data:audio/wav;base64,UklGRl9vAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YUtvAACAgICAgICAgICAgICAgICAgICAgICAgICA3p2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ3Gvampqa3GzMbG3eTdy/Dy493k59/o5eXm6ODq6efm5+3v8/X2+f39");
-
-clickSound.volume = 0.4;
-base64Click.volume = 0.3;
-
-document.addEventListener('click', (e) => {
-  if (e.target.closest('button, .card, .win-btn, .nav-btn, .tab-btn, .project-item, .skill-card-pixel, .desktop-icon-item, .menu-row, .start-item, .start-right-item')) {
-    clickSound.currentTime = 0;
-    clickSound.play().catch(() => {
-      base64Click.currentTime = 0;
-      base64Click.play().catch(() => {});
-    });
-  }
-});
-
-
-// ============================================================
-// 7. FORM SUBMISSION HANDLER & CLOCK SCRIPT
-// ============================================================
+// Form Handler
 function handleFormSubmit(e) {
   e.preventDefault();
   alert("Thank you, Muhammad Abbas Jhanjhi has received your message!");
-  e.target.("MuhammadAbbas1011@outlook.com")
+  e.target.reset();
 }
-
-function updateClock() {
-  const now = new Date();
-  document.getElementById('clock').innerText = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-}
-setInterval(updateClock, 1000);
-updateClock();

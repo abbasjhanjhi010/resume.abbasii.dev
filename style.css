@@ -1,10 +1,11 @@
 /* ============================================================
-   GLOBAL W95FA TYPOGRAPHY (ALINA SAVA)
+   LOCAL W95FA FONT IMPORT
    ============================================================ */
 @font-face {
   font-family: 'W95FA';
-  src: url('https://cdn.jsdelivr.net/gh/alina-sava/W95FA@master/W95FA.otf') format('opentype'),
-       url('https://cdn.jsdelivr.net/gh/alina-sava/W95FA@master/W95FA.woff') format('woff');
+  src: url('W95FA/w95fa.woff2') format('woff2'),
+       url('W95FA/w95fa.woff') format('woff'),
+       url('W95FA/W95FA') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -32,7 +33,6 @@
   font-family: 'W95FA', 'Tahoma', 'MS Sans Serif', monospace, sans-serif !important;
   user-select: none;
 }
-
 body, button, input, textarea, a, div, span, h1, h2, h3, h4, p, label {
   cursor: var(--cursor-default);
   font-family: 'W95FA', 'Tahoma', sans-serif !important;
