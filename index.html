@@ -3,139 +3,444 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Portfolio - Windows XP Style</title>
+  
+  <!-- TAB TITLE -->
+  <title>Muhammad Abbas Jhanjhi - Portfolio OS</title>
+  
+  <!-- CREATIVE SVG FAVICON ("MJ" Monogram in XP Style) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230058e6'/><rect x='2' y='2' width='28' height='28' rx='4' fill='none' stroke='%232b88f0' stroke-width='2'/><text x='16' y='22' font-family='Tahoma, sans-serif' font-weight='bold' font-size='14' fill='white' text-anchor='middle'>MJ</text></svg>">
+  
   <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body oncontextmenu="return false;">
 
-  <!-- Desktop Environment -->
+  <!-- DESKTOP WORKSPACE -->
   <div id="desktop">
 
-    <!-- Navigation / Home Window -->
-    <div id="win-home" class="xp-window active" style="top: 40px; left: 40px; width: 620px;">
-      <div class="title-bar">
-        <span>Explorer - Home</span>
-        <div class="window-controls"><div class="win-btn close" onclick="closeWindow('win-home')">X</div></div>
+    <!-- ENLARGED DESKTOP ICONS (Feature 5) -->
+    <!-- EDIT PERSONAL INFO HERE: Social Media Links -->
+    <div class="desktop-icons">
+      
+      <!-- RERECOGNIZABLE GITHUB OCTOCAT ICON -->
+      <a href="https://github.com" target="_blank" class="desktop-icon-item">
+        <svg class="pixel-icon-svg" viewBox="0 0 32 32">
+          <path d="M16 2C8.27 2 2 8.54 2 16.61c0 6.46 4.1 11.93 9.79 13.88.7.13.96-.31.96-.69 0-.34-.01-1.25-.02-2.45-3.99.89-4.83-1.97-4.83-1.97-.65-1.7-1.6-2.15-1.6-2.15-1.3-.92.1-.9.1-.9 1.44.1 2.2 1.52 2.2 1.52 1.28 2.25 3.36 1.6 4.18 1.23.13-.95.5-1.6 0.91-1.97-3.19-.37-6.54-1.63-6.54-7.25 0-1.6.56-2.91 1.48-3.94-.15-.37-.64-1.86.14-3.89 0 0 1.21-.4 3.97 1.52 1.15-.33 2.38-.5 3.6-.5 1.22 0 2.45.17 3.6.5 2.76-1.92 3.96-1.52 3.96-1.52.78 2.03.29 3.52.14 3.89.92 1.03 1.48 2.34 1.48 3.94 0 5.64-3.36 6.87-6.57 7.23.52.46.98 1.36.98 2.74 0 1.98-.02 3.58-.02 4.07 0 .39.25.83.97.69C25.9 28.53 30 23.06 30 16.61 30 8.54 23.73 2 16 2z" fill="#ffffff"/>
+        </svg>
+        <span>GitHub.lnk</span>
+      </a>
+
+      <a href="https://linkedin.com" target="_blank" class="desktop-icon-item">
+        <svg class="pixel-icon-svg" viewBox="0 0 32 32">
+          <rect x="2" y="2" width="28" height="28" rx="4" fill="#0077b5" />
+          <rect x="7" y="13" width="5" height="12" fill="#fff" />
+          <circle cx="9.5" cy="8.5" r="3" fill="#fff" />
+          <path d="M15 13 h5 v2 h0.1 c0.7-1.3 2.4-2.7 4.9-2.7 5.2 0 6.2 3.4 6.2 7.9 V25 h-5 v-7c0-1.7 0-3.8-2.3-3.8-2.3 0-2.7 1.8-2.7 3.7 V25 h-5 V13 z" fill="#fff" />
+        </svg>
+        <span>LinkedIn.lnk</span>
+      </a>
+
+      <a href="https://youtube.com" target="_blank" class="desktop-icon-item">
+        <svg class="pixel-icon-svg" viewBox="0 0 32 32">
+          <rect x="2" y="5" width="28" height="22" rx="6" fill="#ff0000" />
+          <polygon points="13,10 22,16 13,22" fill="#ffffff" />
+        </svg>
+        <span>YouTube.lnk</span>
+      </a>
+
+      <div class="desktop-icon-item" onclick="openWindow('win-secret')">
+        <svg class="pixel-icon-svg" viewBox="0 0 32 32">
+          <rect x="5" y="3" width="22" height="26" fill="#fff8dc" stroke="#b8860b" stroke-width="2"/>
+          <line x1="9" y1="9" x2="23" y2="9" stroke="#8b4513" stroke-width="2"/>
+          <line x1="9" y1="15" x2="23" y2="15" stroke="#8b4513" stroke-width="2"/>
+          <line x1="9" y1="21" x2="18" y2="21" stroke="#8b4513" stroke-width="2"/>
+        </svg>
+        <span>Secret_Notes.txt</span>
+      </div>
+
+    </div>
+
+
+    <!-- ============================================================
+         1. HOME WINDOW (Theme: Classic Blue Explorer)
+         ============================================================ -->
+    <div id="win-home" class="xp-window theme-home active" style="top: 25px; left: 180px; width: 620px;">
+      <div class="title-bar" data-win-id="win-home">
+        <div class="title-text">🌐 C:\Users\Abbas\Home.html</div>
+        <div class="window-controls">
+          <div class="win-btn close" onclick="closeWindow('win-home')">X</div>
+        </div>
       </div>
       <div class="browser-nav">
-        <button class="nav-btn" onclick="openWindow('win-work')">Work</button>
+        <button class="nav-btn" onclick="openWindow('win-projects')">Projects</button>
+        <button class="nav-btn" onclick="openWindow('win-skills')">Skills</button>
         <button class="nav-btn" onclick="openWindow('win-resume')">Resume</button>
         <button class="nav-btn" onclick="openWindow('win-gallery')">Gallery</button>
         <button class="nav-btn" onclick="openWindow('win-contact')">Contact</button>
       </div>
       <div class="window-body">
-        <h2>Welcome to My Digital Workspace! 👋</h2>
-        <p style="margin: 8px 0 16px 0;">Developer & Creative Problem Solver building functional web experiences.</p>
+        <h2>Hello! I'm Muhammad Abbas Jhanjhi 👋</h2>
+        <p class="subtitle">Bachelors of Science (Bs) — Computer Science Student @ Sunway University (2026–2029)</p>
         
+        <div class="bio-box">
+          <p>I build scalable, modern web applications with functional user interfaces and robust architectures.</p>
+        </div>
+
         <div class="grid-2">
           <div class="card">
-            <h3>💻 Featured Projects</h3>
-            <p>Explore full-stack apps and personal side experiments.</p>
-            <button class="xp-btn" onclick="openWindow('win-work')">View Work</button>
+            <h3>📂 Projects Overview</h3>
+            <p>Explore software, productivity apps, and personal algorithms.</p>
+            <button class="xp-btn" onclick="openWindow('win-projects')">Open Projects.exe</button>
           </div>
           <div class="card">
-            <h3>📄 Resume & Experience</h3>
-            <p>Check out my employment history, skills, and awards.</p>
-            <button class="xp-btn" onclick="openWindow('win-resume')">View Experience</button>
+            <h3>⚡ Tech Stack & Skills</h3>
+            <p>View languages, frameworks, and developer tools.</p>
+            <button class="xp-btn" onclick="openWindow('win-skills')">View Skills</button>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Work Page Window -->
-    <div id="win-work" class="xp-window" style="top: 70px; left: 100px; width: 580px;">
-      <div class="title-bar">
-        <span>C:\Portfolio\Work.exe</span>
-        <div class="window-controls"><div class="win-btn close" onclick="closeWindow('win-work')">X</div></div>
+
+    <!-- ============================================================
+         2. PROJECTS WINDOW (Theme: Dark Executable Console)
+         ============================================================ -->
+    <div id="win-projects" class="xp-window theme-projects" style="top: 55px; left: 220px; width: 560px;">
+      <div class="title-bar" data-win-id="win-projects">
+        <div class="title-text">⚙️ C:\Portfolio\Projects.exe</div>
+        <div class="window-controls">
+          <div class="win-btn close" onclick="closeWindow('win-projects')">X</div>
+        </div>
       </div>
       <div class="window-body">
-        <h2>Featured Work & Projects</h2>
-        <p style="margin-bottom: 12px;">A showcase of client jobs and personal development builds.</p>
+        <h2>Featured Projects</h2>
+        <p class="section-desc">A selection of featured applications and experimental software.</p>
         
-        <div class="card">
-          <h3>🚀 Web Application Suite</h3>
-          <p><strong>Professional Project:</strong> Scalable interactive dashboard built with responsive UX principles.</p>
-          <button class="xp-btn">Launch Demo</button>
-        </div>
-        <div class="card">
-          <h3>🎮 Retro Audio / UI Simulator</h3>
-          <p><strong>Personal Project:</strong> Custom desktop interface simulating retro OS features using modern JavaScript.</p>
-          <button class="xp-btn">Source Code</button>
+        <div class="project-list">
+          <div class="project-item">
+            <div class="project-icon">📋</div>
+            <div class="project-info">
+              <h4>TaskFlow</h4>
+              <p>A productivity app to organize your daily tasks efficiently.</p>
+            </div>
+            <button class="xp-btn action-btn">View Repo</button>
+          </div>
+
+          <div class="project-item">
+            <div class="project-icon">📈</div>
+            <div class="project-info">
+              <h4>AlgoVisualizer</h4>
+              <p>Visualize complex algorithms and data structures in real-time.</p>
+            </div>
+            <button class="xp-btn action-btn">View Repo</button>
+          </div>
+
+          <div class="project-item">
+            <div class="project-icon">💬</div>
+            <div class="project-info">
+              <h4>StudyBuddy</h4>
+              <p>A collaborative study platform built for university students.</p>
+            </div>
+            <button class="xp-btn action-btn">View Repo</button>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Resume Page Window -->
-    <div id="win-resume" class="xp-window" style="top: 90px; left: 140px; width: 560px;">
-      <div class="title-bar">
-        <span>C:\Documents\Resume.txt</span>
-        <div class="window-controls"><div class="win-btn close" onclick="closeWindow('win-resume')">X</div></div>
+
+    <!-- ============================================================
+         3. SKILLS WINDOW (With Key Index Legend & Shading)
+         ============================================================ -->
+    <div id="win-skills" class="xp-window theme-skills" style="top: 75px; left: 260px; width: 580px;">
+      <div class="title-bar" data-win-id="win-skills">
+        <div class="title-text">🛠️ C:\System32\TechStack.dll</div>
+        <div class="window-controls">
+          <div class="win-btn close" onclick="closeWindow('win-skills')">X</div>
+        </div>
       </div>
       <div class="window-body">
-        <h2>Career Experience & Awards</h2>
-        <hr style="margin: 8px 0;">
         
-        <h3>Work History</h3>
-        <div class="card">
-          <h4>Frontend Engineer — Tech Firm</h4>
-          <span style="color: #666; font-size: 11px;">2024 - Present</span>
-          <p>Designed and deployed web applications, increasing user engagement and performance.</p>
+        <!-- HEADER WITH RIGHT-ALIGNED PROFICIENCY KEY INDEX -->
+        <div class="skills-header-container">
+          <div>
+            <h2>Tech Stack & System Components</h2>
+            <p class="section-desc">Technologies loaded in system memory.</p>
+          </div>
+          <div class="skills-legend-key">
+            <span class="legend-title">KEY INDEX:</span>
+            <div class="legend-items">
+              <span class="key-badge lvl-expert">Expert</span>
+              <span class="key-badge lvl-advanced">Advanced</span>
+              <span class="key-badge lvl-intermediate">Interm.</span>
+              <span class="key-badge lvl-beginner">Beginner</span>
+            </div>
+          </div>
         </div>
+        
+        <!-- COLOR SHADED SKILLS GRID -->
+        <div class="skills-grid">
+          
+          <div class="skill-card-pixel lvl-expert">
+            <div class="level-indicator">EXPERT</div>
+            <svg class="pixel-skill-svg" viewBox="0 0 32 32"><path d="M4 2 L28 2 L25 28 L16 31 L7 28 Z" fill="#e44d26"/><path d="M16 4 L25 4 L23 26 L16 28 Z" fill="#f16529"/><path d="M16 10 L10 10 L11 15 L16 15 L16 19 L12 18 L12 16 L8 16 L9 22 L16 24 L21 22 L22 10 Z" fill="#fff"/></svg>
+            <span class="pixel-font">HTML5</span>
+          </div>
 
-        <h3 style="margin-top: 12px;">Honors & Awards</h3>
-        <div class="card">
-          🏆 High Impact Developer Award — 2025
+          <div class="skill-card-pixel lvl-expert">
+            <div class="level-indicator">EXPERT</div>
+            <svg class="pixel-skill-svg" viewBox="0 0 32 32"><path d="M4 2 L28 2 L25 28 L16 31 L7 28 Z" fill="#264de4"/><path d="M16 4 L25 4 L23 26 L16 28 Z" fill="#2965f1"/><path d="M16 10 L10 10 L11 15 L20 15 L19 22 L16 23 L13 22 L12 18 L8 18 L9 24 L16 26 L23 24 L24 10 Z" fill="#fff"/></svg>
+            <span class="pixel-font">CSS3</span>
+          </div>
+
+          <div class="skill-card-pixel lvl-advanced">
+            <div class="level-indicator">ADVANCED</div>
+            <svg class="pixel-skill-svg" viewBox="0 0 32 32"><rect width="32" height="32" fill="#f7df1e"/><path d="M18 14 L21 14 L21 22 C21 24 19 25 17 25 C15 25 14 24 14 23 L16 21 C17 22 18 22 19 22 C20 22 20 21 20 20 L20 14 Z M23 14 L29 14 L29 16 L25 16 L25 18 C26 18 29 19 29 22 C29 24 27 25 24 25 C22 25 20 24 20 22 L22 21 C22 22 23 23 25 23 C27 23 27 22 27 21 C27 20 26 20 24 19 C21 18 21 17 21 16 C21 14 23 14 26 14 Z" fill="#000"/></svg>
+            <span class="pixel-font">JAVASCRIPT</span>
+          </div>
+
+          <div class="skill-card-pixel lvl-advanced">
+            <div class="level-indicator">ADVANCED</div>
+            <svg class="pixel-skill-svg" viewBox="0 0 32 32"><path d="M15 2 C8 2 8 5 8 5 L8 9 L15 9 L15 10 L6 10 C6 10 2 10 2 16 C2 22 5 22 5 22 L8 22 L8 18 C8 14 12 14 12 14 L18 14 C21 14 22 11 22 11 L22 5 C22 2 15 2 15 2 Z" fill="#3776ab"/><path d="M17 30 C24 30 24 27 24 27 L24 23 L17 23 L17 22 L26 22 C26 22 30 22 30 16 C30 10 27 10 27 10 L24 10 L24 14 C24 18 20 18 20 18 L14 18 C11 18 10 21 10 21 L10 27 C10 30 17 30 17 30 Z" fill="#ffd43b"/></svg>
+            <span class="pixel-font">PYTHON</span>
+          </div>
+
+          <div class="skill-card-pixel lvl-intermediate">
+            <div class="level-indicator">INTERM.</div>
+            <svg class="pixel-skill-svg" viewBox="0 0 32 32"><circle cx="16" cy="16" r="3" fill="#61dafb"/><ellipse cx="16" cy="16" rx="12" ry="4.5" fill="none" stroke="#61dafb" stroke-width="2" transform="rotate(30 16 16)"/><ellipse cx="16" cy="16" rx="12" ry="4.5" fill="none" stroke="#61dafb" stroke-width="2" transform="rotate(90 16 16)"/><ellipse cx="16" cy="16" rx="12" ry="4.5" fill="none" stroke="#61dafb" stroke-width="2" transform="rotate(150 16 16)"/></svg>
+            <span class="pixel-font">REACT</span>
+          </div>
+
+          <div class="skill-card-pixel lvl-intermediate">
+            <div class="level-indicator">INTERM.</div>
+            <svg class="pixel-skill-svg" viewBox="0 0 32 32"><polygon points="16,2 29,9 29,23 16,30 3,23 3,9" fill="#68a063"/><polygon points="16,4 27,10 27,22 16,28 5,22 5,10" fill="#303030"/><path d="M16 8 L22 11 L22 18 L16 21 L10 18 L10 11 Z" fill="#68a063"/></svg>
+            <span class="pixel-font">NODE.JS</span>
+          </div>
+
+          <div class="skill-card-pixel lvl-beginner">
+            <div class="level-indicator">BEGINNER</div>
+            <svg class="pixel-skill-svg" viewBox="0 0 32 32"><ellipse cx="16" cy="7" rx="12" ry="4" fill="#00758f"/><path d="M4 7 L4 16 C4 18 9 20 16 20 C23 20 28 18 28 16 L28 7" fill="none" stroke="#00758f" stroke-width="3"/><path d="M4 16 L4 25 C4 27 9 29 16 29 C23 29 28 27 28 25 L28 16" fill="none" stroke="#f29111" stroke-width="3"/></svg>
+            <span class="pixel-font">MYSQL</span>
+          </div>
+
+          <div class="skill-card-pixel lvl-advanced">
+            <div class="level-indicator">ADVANCED</div>
+            <svg class="pixel-skill-svg" viewBox="0 0 32 32"><path d="M30 14 L18 2 C16.5 0.5 14 0.5 12.5 2 L2 12.5 C0.5 14 0.5 16.5 2 18 L14 30 C15.5 31.5 18 31.5 19.5 30 L30 19.5 C31.5 18 31.5 15.5 30 14 Z" fill="#f05032"/><circle cx="12" cy="12" r="2.5" fill="#fff"/><circle cx="20" cy="12" r="2.5" fill="#fff"/><circle cx="20" cy="20" r="2.5" fill="#fff"/><line x1="12" y1="12" x2="20" y2="20" stroke="#fff" stroke-width="2"/></svg>
+            <span class="pixel-font">GIT</span>
+          </div>
+
         </div>
       </div>
     </div>
 
-    <!-- Gallery Page Window -->
-    <div id="win-gallery" class="xp-window" style="top: 110px; left: 180px; width: 520px;">
-      <div class="title-bar">
-        <span>Special Events Gallery</span>
-        <div class="window-controls"><div class="win-btn close" onclick="closeWindow('win-gallery')">X</div></div>
+
+    <!-- ============================================================
+         4. RESUME WINDOW (Theme: Notepad Paper & Bullet Fix)
+         ============================================================ -->
+    <div id="win-resume" class="xp-window theme-resume" style="top: 105px; left: 300px; width: 560px;">
+      <div class="title-bar" data-win-id="win-resume">
+        <div class="title-text">📄 C:\Documents\Resume.txt - Notepad</div>
+        <div class="window-controls">
+          <div class="win-btn close" onclick="closeWindow('win-resume')">X</div>
+        </div>
       </div>
       <div class="window-body">
-        <h2>Events & Highlights</h2>
-        <p style="margin-bottom: 12px;">Snapshots from hackathons, tech conferences, and team events.</p>
+        <h2>Resume & Qualifications</h2>
+        
+        <div class="card notepad-card">
+          <h3>🎓 Education</h3>
+          <p><strong>Bachelors of Science (Bs) — Computer Science</strong></p>
+          <p>Sunway University | 2026 – 2029</p>
+        </div>
+
+        <div class="card notepad-card">
+          <h3>💼 Previously Worked Jobs & Experience</h3>
+          <ul class="experience-list">
+            <li>
+              <strong>Software Engineering Intern</strong> — Tech Solutions (2025)
+              <p>Developed responsive web interfaces and assisted in API integration.</p>
+            </li>
+            <li>
+              <strong>Freelance Web Developer</strong> (2024 - Present)
+              <p>Designed and deployed custom client websites and interactive tools.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card notepad-card">
+          <h3>🏆 Awards & Certifications</h3>
+          <ul class="experience-list">
+            <li>Dean's Honor Roll Recipient — 2026</li>
+            <li>Sunway Hackathon Finalist — 2026</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ============================================================
+         5. GALLERY WINDOW
+         ============================================================ -->
+    <div id="win-gallery" class="xp-window theme-gallery" style="top: 125px; left: 340px; width: 520px;">
+      <div class="title-bar" data-win-id="win-gallery">
+        <div class="title-text">🖼️ Special Events Gallery</div>
+        <div class="window-controls">
+          <div class="win-btn close" onclick="closeWindow('win-gallery')">X</div>
+        </div>
+      </div>
+      <div class="folder-bar">
+        <span>Address: <code>C:\Pictures\SpecialEvents</code></span>
+      </div>
+      <div class="window-body">
+        <h2>Special Events Gallery</h2>
+        <p class="section-desc">Highlights from tech conferences, hackathons, and campus events.</p>
+        
         <div class="grid-2">
-          <div class="card" style="text-align: center;">
-            <div style="background: #ccc; height: 100px; line-height: 100px; margin-bottom: 6px;">[ Event Photo 1 ]</div>
-            <span>Hackathon 2025</span>
+          <div class="card photo-card">
+            <div class="photo-placeholder">📷 Sunway Tech Fest</div>
+            <span>University Tech Fest 2026</span>
           </div>
-          <div class="card" style="text-align: center;">
-            <div style="background: #ccc; height: 100px; line-height: 100px; margin-bottom: 6px;">[ Event Photo 2 ]</div>
-            <span>Tech Summit Speaker</span>
+          <div class="card photo-card">
+            <div class="photo-placeholder">🏆 Hackathon Demo</div>
+            <span>Project Presentation Day</span>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Contact Window -->
-    <div id="win-contact" class="xp-window" style="top: 130px; left: 220px; width: 460px;">
-      <div class="title-bar">
-        <span>Contact Me</span>
-        <div class="window-controls"><div class="win-btn close" onclick="closeWindow('win-contact')">X</div></div>
+
+    <!-- ============================================================
+         6. CONTACT WINDOW
+         ============================================================ -->
+    <div id="win-contact" class="xp-window theme-contact" style="top: 145px; left: 380px; width: 480px;">
+      <div class="title-bar" data-win-id="win-contact">
+        <div class="title-text">✉️ Messenger - Contact Abbas</div>
+        <div class="window-controls">
+          <div class="win-btn close" onclick="closeWindow('win-contact')">X</div>
+        </div>
       </div>
       <div class="window-body">
-        <h2>Get in Touch</h2>
-        <p style="margin-bottom: 12px;">Send a message or reach out via email.</p>
+        <h2>Contact Muhammad Abbas Jhanjhi</h2>
+        <p class="section-desc">Send a direct message or connect on social platforms.</p>
+        
         <div class="card">
-          <p><strong>Email:</strong> user@example.com</p>
-          <p><strong>LinkedIn:</strong> linkedin.com/in/profile</p>
-          <p><strong>GitHub:</strong> github.com/profile</p>
+          <p><strong>Email:</strong> abbas.jhanjhi@example.com</p>
+          <p><strong>Location:</strong> Sunway University, Malaysia</p>
+        </div>
+
+        <form class="retro-form" onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label for="form-name">Your Name:</label>
+            <input type="text" id="form-name" required placeholder="John Doe">
+          </div>
+          <div class="form-group">
+            <label for="form-email">Your Email:</label>
+            <input type="email" id="form-email" required placeholder="john@example.com">
+          </div>
+          <div class="form-group">
+            <label for="form-message">Message:</label>
+            <textarea id="form-message" rows="4" required placeholder="Write your message here..."></textarea>
+          </div>
+          <button type="submit" class="xp-btn">Send Message 📨</button>
+        </form>
+      </div>
+    </div>
+
+
+    <!-- ============================================================
+         7. SECRET EASTER EGG WINDOW
+         ============================================================ -->
+    <div id="win-secret" class="xp-window theme-resume" style="top: 90px; left: 240px; width: 440px;">
+      <div class="title-bar" data-win-id="win-secret">
+        <div class="title-text">🔍 Secret_Notes.txt - System Trivia</div>
+        <div class="window-controls">
+          <div class="win-btn close" onclick="closeWindow('win-secret')">X</div>
+        </div>
+      </div>
+      <div class="window-body">
+        <h2>🎉 You Found the Easter Egg!</h2>
+        <p class="section-desc">Unessential fun facts about Muhammad Abbas Jhanjhi:</p>
+        <div class="card notepad-card">
+          <p>☕ Powered by iced coffee & lofi beats.</p>
+          <p>💻 Favorite OS Aesthetics: Windows XP & Classic Mac OS.</p>
+          <p>⚡ High Score: Solved 50+ algorithm challenges in 1 week.</p>
+          <p>🎓 Expected Graduation: Sunway University 2029.</p>
         </div>
       </div>
     </div>
 
   </div>
 
-  <!-- Taskbar -->
+
+  <!-- START MENU -->
+  <div id="xp-start-menu">
+    <div class="start-menu-header">
+      <div class="user-avatar">👤</div>
+      <span class="user-name">Muhammad Abbas Jhanjhi</span>
+    </div>
+    <div class="start-menu-body">
+      <div class="start-left-col">
+        <div class="start-item" onclick="openWindow('win-contact')">
+          <span class="start-icon">✉️</span>
+          <div><strong>E-mail</strong><div class="start-subtext">Contact Abbas Jhanjhi</div></div>
+        </div>
+        <div class="start-item" onclick="openWindow('win-projects')">
+          <span class="start-icon">⚙️</span>
+          <div><strong>Projects.exe</strong><div class="start-subtext">View Applications</div></div>
+        </div>
+        <div class="start-item" onclick="openWindow('win-skills')">
+          <span class="start-icon">🛠️</span>
+          <div><strong>TechStack.dll</strong><div class="start-subtext">System Components</div></div>
+        </div>
+        <div class="start-item" onclick="openWindow('win-secret')">
+          <span class="start-icon">📝</span>
+          <div><strong>Notepad++</strong><div class="start-subtext">Secret_Notes.txt</div></div>
+        </div>
+        <div class="start-divider"></div>
+        <div class="start-item" onclick="openWindow('win-home')">
+          <span class="start-icon">🌐</span>
+          <div><strong>All Programs</strong><span style="color:#2e7d32; font-size:10px;">►</span></div>
+        </div>
+      </div>
+      <div class="start-right-col">
+        <div class="start-right-item" onclick="openWindow('win-resume')"><span>📁 My Documents</span></div>
+        <div class="start-right-item" onclick="openWindow('win-skills')"><span>💻 My Computer</span></div>
+        <div class="start-right-item" onclick="openWindow('win-gallery')"><span>🌐 My Network Places</span></div>
+        <div class="start-right-divider"></div>
+        <div class="start-right-item" onclick="openWindow('win-contact')"><span>⚙️ Control Panel</span></div>
+        <div class="start-right-item" onclick="openWindow('win-secret')"><span>🔒 System Properties</span></div>
+      </div>
+    </div>
+    <div class="start-menu-footer">
+      <button class="start-footer-btn logoff" onclick="alert('Logged off from Portfolio OS')">🔑 Log Off</button>
+      <button class="start-footer-btn shutdown" onclick="alert('System Shutdown. Refresh page to restart.')">🌰 Shut Down</button>
+    </div>
+  </div>
+
+
+  <!-- UNIVERSAL RIGHT-CLICK CONTEXT MENU -->
+  <div id="global-context-menu" class="win11-context-menu">
+    <div class="menu-row" onclick="alert('View Options')"><span>🪟 View</span> <span>›</span></div>
+    <div class="menu-row" onclick="alert('Sort By Options')"><span>🔀 Sort by</span> <span>›</span></div>
+    <div class="menu-row" onclick="location.reload()"><span>🔄 Refresh</span></div>
+    <div class="menu-line"></div>
+    <div class="menu-row" onclick="alert('New Item Created')"><span>➕ New</span> <span>›</span></div>
+    <div class="menu-line"></div>
+    <div class="menu-row" onclick="openWindow('win-skills')"><span>⚙️ Display settings</span></div>
+    <div class="menu-row" onclick="openWindow('win-gallery')"><span>🎨 Personalize</span></div>
+    <div class="menu-line"></div>
+    <div class="menu-row" onclick="openWindow('win-projects')"><span>💻 Open in Terminal</span></div>
+    <div class="menu-row" onclick="openWindow('win-secret')"><span>📝 Secret_Notes.txt</span></div>
+  </div>
+
+
+  <!-- TASKBAR -->
   <div id="taskbar">
-    <button class="start-btn">start</button>
+    <button class="start-btn" id="start-button-toggle">
+      <span style="font-weight: 900; font-size: 14px;">start</span>
+    </button>
     <div class="taskbar-tabs">
       <button class="tab-btn" onclick="openWindow('win-home')">Home</button>
-      <button class="tab-btn" onclick="openWindow('win-work')">Work</button>
+      <button class="tab-btn" onclick="openWindow('win-projects')">Projects.exe</button>
+      <button class="tab-btn" onclick="openWindow('win-skills')">Skills</button>
       <button class="tab-btn" onclick="openWindow('win-resume')">Resume</button>
       <button class="tab-btn" onclick="openWindow('win-gallery')">Gallery</button>
       <button class="tab-btn" onclick="openWindow('win-contact')">Contact</button>
