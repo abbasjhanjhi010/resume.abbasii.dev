@@ -160,7 +160,7 @@ function goBackIe() {
   } else {
     // FALLBACK: If at the start of history (e.g. opened repo directly from Projects.exe),
     // navigate back to the main GitHub profile page!
-    navigateIeTo('https://github.com/abbas-jhanjhi', 'github', false);
+    navigateIeTo('https://github.com/muhammadabbas010', 'github', false);
   }
 }
 
