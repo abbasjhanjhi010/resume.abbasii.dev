@@ -119,24 +119,90 @@ async function fetchLatestCombinedActivity() {
 
 
 // ============================================================
-// 3. RETRO IE BROWSER WITH YOUTUBE API INTEGRATION
+// 3. RETRO IE BROWSER WITH HISTORY STACK & REPO INSPECTOR
 // ============================================================
-let currentIeType = 'github';
-let currentIeUrl = 'https://github.com/abbas-jhanjhi';
+let ieHistoryStack = [];
+let ieHistoryIndex = -1;
 
-function openInRetroBrowser(url, brandType) {
-  currentIeUrl = url;
-  currentIeType = brandType;
+function navigateIeTo(url, brandType, isRepo = false, owner = '', repo = '') {
+  if (ieHistoryIndex === -1 || ieHistoryStack[ieHistoryIndex]?.url !== url) {
+    ieHistoryStack = ieHistoryStack.slice(0, ieHistoryIndex + 1);
+    ieHistoryStack.push({ url, brandType, isRepo, owner, repo });
+    ieHistoryIndex = ieHistoryStack.length - 1;
+  }
 
   const urlInput = document.getElementById('ie-url-input');
   if (urlInput) urlInput.value = url;
 
-  renderIeProfileContent(brandType);
+  if (isRepo) {
+    loadGitHubRepoData(owner, repo, 'ie-render-container');
+  } else {
+    renderIeProfileContent(brandType);
+  }
+}
+
+
+// LETS THE USER GO BACK TO GITHUB PROFILE PAGE WITHOUT EVER LOADING IT
+function goBackIe() {   
+  if (ieHistoryIndex > 0) {
+    // Standard back navigation through history stack
+    ieHistoryIndex--;
+    const state = ieHistoryStack[ieHistoryIndex];
+    
+    const urlInput = document.getElementById('ie-url-input');
+    if (urlInput) urlInput.value = state.url;
+
+    if (state.isRepo) {
+      loadGitHubRepoData(state.owner, state.repo, 'ie-render-container');
+    } else {
+      renderIeProfileContent(state.brandType);
+    }
+  } else {
+    // FALLBACK: If at the start of history (e.g. opened repo directly from Projects.exe),
+    // navigate back to the main GitHub profile page!
+    navigateIeTo('https://github.com/abbas-jhanjhi', 'github', false);
+  }
+}
+
+function goForwardIe() {
+  if (ieHistoryIndex < ieHistoryStack.length - 1) {
+    ieHistoryIndex++;
+    const state = ieHistoryStack[ieHistoryIndex];
+
+    const urlInput = document.getElementById('ie-url-input');
+    if (urlInput) urlInput.value = state.url;
+
+    if (state.isRepo) {
+      loadGitHubRepoData(state.owner, state.repo, 'ie-render-container');
+    } else {
+      renderIeProfileContent(state.brandType);
+    }
+  }
+}
+
+function openInRetroBrowser(url, brandType) {
+  const cleanPath = url.replace(/^https?:\/\/(www\.)?github\.com\//, '');
+  const parts = cleanPath.split('/').filter(Boolean);
+
+  if (brandType === 'github' && parts.length >= 2) {
+    navigateIeTo(url, 'github', true, parts[0], parts[1]);
+  } else {
+    navigateIeTo(url, brandType, false);
+  }
   openWindow('win-ie');
 }
 
 function refreshIeProfile() {
-  renderIeProfileContent(currentIeType);
+  if (ieHistoryIndex >= 0) {
+    const state = ieHistoryStack[ieHistoryIndex];
+    if (state.isRepo) {
+      loadGitHubRepoData(state.owner, state.repo, 'ie-render-container');
+    } else {
+      renderIeProfileContent(state.brandType);
+    }
+  } else {
+    renderIeProfileContent('github');
+  }
 }
 
 async function renderIeProfileContent(type) {
@@ -144,7 +210,45 @@ async function renderIeProfileContent(type) {
   const title = document.getElementById('ie-window-title');
   if (!container || !title) return;
 
-  if (type === 'youtube') {
+  if (type === 'github') {
+    title.innerText = '🌐 C:\\Program Files\\Internet Explorer\\iexplore.exe - GitHub Profile';
+    container.innerHTML = `
+      <div style="padding: 10px; font-family: Tahoma, sans-serif;">
+        <div class="brand-profile-header brand-github">
+          <div class="profile-avatar-circle">🐙</div>
+          <div class="profile-details">
+            <h3 style="margin:0; font-size:14px;">Abbas Jhanjhi (@muhammadabbas010)</h3>
+            <p style="margin:4px 0 0 0; font-size:11px; opacity:0.9;">Computer Science Student @ Sunway University | Full-Stack & Systems Developer</p>
+          </div>
+        </div>
+        
+        <div style="margin: 10px 0; text-align: right;">
+          <a class="xp-btn" href="https://github.com/muhammadabbas010" target="_blank" rel="noopener noreferrer" style="font-weight: bold; padding: 4px 10px; text-decoration: none; display: inline-block;">
+            🌐 Open GitHub Profile on Web ►
+          </a>
+        </div>
+
+        <h3 style="margin: 12px 0 8px 0; font-size: 13px;">📦 Featured Repositories</h3>
+        <div class="brand-card-grid" style="display: flex; gap: 10px;">
+          <div class="brand-item-card" style="flex: 1; padding: 8px; border: 1px solid #7f9db9; border-radius: 3px; background: #fff;">
+            <h4 style="margin:0 0 6px 0; color:#003399; font-size:12px;">Athena Cafe</h4>
+            <p style="font-size:11px; margin:0 0 10px 0; color:#333; line-height:1.3;">A productivity web app inspired by a Turkish Greek coffee shop.</p>
+            <button class="xp-btn" onclick="navigateIeTo('https://github.com/MuhammadAbbas010/Athena-Cafe', 'github', true, 'MuhammadAbbas010', 'Athena-Cafe')" style="font-size:11px; font-weight:bold;">
+              Inspect Repo
+            </button>
+          </div>
+
+          <div class="brand-item-card" style="flex: 1; padding: 8px; border: 1px solid #7f9db9; border-radius: 3px; background: #fff;">
+            <h4 style="margin:0 0 6px 0; color:#003399; font-size:12px;">Python Content Calendar</h4>
+            <p style="font-size:11px; margin:0 0 10px 0; color:#333; line-height:1.3;">Text–based social media planner and analytics tool.</p>
+            <button class="xp-btn" onclick="navigateIeTo('https://github.com/MuhammadAbbas010/CSC1024-Social-Media-Planner', 'github', true, 'MuhammadAbbas010', 'CSC1024-Social-Media-Planner')" style="font-size:11px; font-weight:bold;">
+              Inspect Repo
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  } else if (type === 'youtube') {
     title.innerText = '🌐 C:\\Program Files\\Internet Explorer\\iexplore.exe - YouTube Channel';
     container.innerHTML = `<p style="font-size:12px;">⏳ Connecting to YouTube Data API v3...</p>`;
 
@@ -224,30 +328,6 @@ async function renderIeProfileContent(type) {
         </div>
       `;
     }
-  } else if (type === 'github') {
-    title.innerText = '🌐 C:\\Program Files\\Internet Explorer\\iexplore.exe - GitHub Profile';
-    container.innerHTML = `
-      <div class="brand-profile-header brand-github">
-        <div class="profile-avatar-circle">🐙</div>
-        <div class="profile-details">
-          <h3>Muhammad Abbas Jhanjhi (@abbas-jhanjhi)</h3>
-          <p>Computer Science Student @ Sunway University | Full-Stack & Systems Developer</p>
-        </div>
-      </div>
-      <h3>📦 Featured Repositories</h3>
-      <div class="brand-card-grid" style="margin-top:10px;">
-        <div class="brand-item-card">
-          <h4>TaskFlow</h4>
-          <p>A productivity web app built for organizing daily university tasks.</p>
-          <span style="font-size:10px; color:#666;">⭐ 12 Stars | JavaScript</span>
-        </div>
-        <div class="brand-item-card">
-          <h4>AlgoVisualizer</h4>
-          <p>Interactive graph and sorting algorithm visualizer suite.</p>
-          <span style="font-size:10px; color:#666;">⭐ 24 Stars | Python & React</span>
-        </div>
-      </div>
-    `;
   } else if (type === 'linkedin') {
     title.innerText = '🌐 C:\\Program Files\\Internet Explorer\\iexplore.exe - LinkedIn Profile';
     container.innerHTML = `
@@ -276,6 +356,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Fetch Live Dual Activity
   fetchLatestCombinedActivity();
+
+  // PREVENT BACKGROUND DESKTOP SCROLLING WHEN OVER XP WINDOWS
+  document.addEventListener('wheel', (e) => {
+    const scrollTarget = e.target.closest('.window-body, .cmd-body, .xp-window');
+    if (scrollTarget) {
+      const scrollTop = scrollTarget.scrollTop;
+      const scrollHeight = scrollTarget.scrollHeight;
+      const height = scrollTarget.clientHeight;
+      const delta = e.deltaY;
+
+      // Stop page body from scrolling
+      if ((delta > 0 && scrollTop + height >= scrollHeight) || (delta < 0 && scrollTop <= 0)) {
+        e.preventDefault();
+      }
+      e.stopPropagation();
+    }
+  }, { passive: false });
 
   // Desktop Selection Marquee
   const desktop = document.getElementById('desktop');
@@ -481,6 +578,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // LINK-SHORTCUT CLICK LISTENER
+  document.addEventListener('click', function (e) {
+    const shortcut = e.target.closest('.link-shortcut');
+    if (shortcut && !e.target.closest('#global-context-menu')) {
+      const rawUrl = shortcut.getAttribute('data-url');
+      const type = shortcut.getAttribute('data-type') || 'github';
+
+      if (rawUrl) {
+        e.preventDefault();
+        openInRetroBrowser(rawUrl, type);
+      }
+    }
+  });
+
   // Audio Handler
   const clickSound = new Audio("assets/audio/click.mp3");
   const base64Click = new Audio("data:audio/wav;base64,UklGRl9vAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YUtvAACAgICAgICAgICAgICAgICAgICAgICAgICA3p2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ3Gvampqa3GzMbG3eTdy/Dy493k59/o5eXm6ODq6efm5+3v8/X2+f39");
@@ -535,5 +646,100 @@ async function handleFormSubmit(e) {
     }
   } catch (error) {
     alert("Network error. Please try again later.");
+  }
+}
+
+
+// ============================================================
+// GITHUB REPO INSPECTOR (EXPANDED README + SMALLER COMMIT LOG)
+// ============================================================
+async function loadGitHubRepoData(owner, repo, windowContentId) {
+  const container = document.getElementById(windowContentId);
+  
+  document.body.classList.add('xp-loading');
+  container.innerHTML = `<p class="sticky-loading" style="padding: 15px; font-family: Tahoma;">⏳ Connecting to GitHub REST API...</p>`;
+
+  try {
+    const [repoRes, commitsRes, contribRes, readmeRes] = await Promise.all([
+      fetch(`https://api.github.com/repos/${owner}/${repo}`),
+      fetch(`https://api.github.com/repos/${owner}/${repo}/commits?per_page=5`),
+      fetch(`https://api.github.com/repos/${owner}/${repo}/contributors?per_page=5`),
+      fetch(`https://api.github.com/repos/${owner}/${repo}/readme`, {
+        headers: { 'Accept': 'application/vnd.github.raw+json' }
+      })
+    ]);
+
+    if (!repoRes.ok) throw new Error('Repository not found');
+    const repoData = await repoRes.json();
+    const commitsData = commitsRes.ok ? await commitsRes.json() : [];
+    const contribData = contribRes.ok ? await contribRes.json() : [];
+    const readmeData = readmeRes.ok ? await readmeRes.text() : 'No README.md found in repository.';
+
+    const cleanReadme = readmeData.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+    const contribHtml = contribData.length > 0 ? contribData.map(c => `
+      <a href="${c.html_url}" target="_blank" style="display:inline-flex; align-items:center; gap:4px; background:#fff; border:1px solid #7f9db9; padding:1px 5px; text-decoration:none; color:#000; font-size:10px;">
+        <img src="${c.avatar_url}" style="width:12px; height:12px; border-radius:50%;">
+        <strong>${c.login}</strong> (${c.contributions})
+      </a>
+    `).join(' ') : '<span>No contributors data.</span>';
+
+    container.innerHTML = `
+      <div style="padding: 8px; font-family: Tahoma, sans-serif;">
+        
+        <!-- TOP CALL-TO-ACTION BAR -->
+        <div style="background: linear-gradient(to bottom, #0058e6, #00309c); padding: 6px 10px; border-radius: 3px; display: flex; justify-content: flex-end; align-items: center; margin-bottom: 8px; border: 1px solid #002080;">
+          <a class="xp-btn" href="${repoData.html_url}" target="_blank" rel="noopener noreferrer" 
+             style="background: linear-gradient(to bottom, #39d114, #1f8008); color: white; font-weight: bold; border: 1px solid #144e04; padding: 4px 12px; text-decoration: none; border-radius: 2px; text-shadow: 1px 1px 1px #000;">
+             🚀 Open Live Repo on GitHub.com ►
+          </a>
+        </div>
+
+        <!-- REPO SUMMARY CARD -->
+        <div class="card" style="margin-bottom: 8px; padding: 8px;">
+          <h3 style="margin:0 0 4px 0; font-size: 14px;">📦 ${repoData.name} <span style="font-size: 10px; color: #666;">(${repoData.visibility})</span></h3>
+          <p style="margin:0 0 6px 0; font-size: 11px; line-height: 1.3;">${repoData.description || 'No description provided.'}</p>
+          <div style="font-size: 10px; background: #f0f0f0; padding: 4px; border: 1px inset #d0d0d0; display: flex; gap: 10px; margin-bottom: 6px;">
+            <span>⭐ Stars: <strong>${repoData.stargazers_count}</strong></span>
+            <span>🍴 Forks: <strong>${repoData.forks_count}</strong></span>
+            <span>🛠️ Language: <strong>${repoData.language || 'N/A'}</strong></span>
+          </div>
+
+          <div style="font-size: 10px;">
+            <strong>👥 Contributors:</strong> ${contribHtml}
+          </div>
+        </div>
+
+        <!-- SIDE-BY-SIDE DUAL COLUMN LAYOUT -->
+        <div style="display: flex; gap: 8px; height: 230px;">
+          
+          <!-- LEFT COLUMN: BLUE (EXPANDED README) -->
+          <div class="cmd-terminal-box" style="flex: 2.2; display: flex; flex-direction: column; height: 100%; border: 1px solid #0055b3;">
+            <div class="cmd-bar" style="background: linear-gradient(to right, #0055b3, #3385ff);">📄 README.md Preview</div>
+            <div class="cmd-body" style="flex: 1; font-size: 10px; overflow-y: auto; white-space: pre-wrap; font-family: monospace; color: #d0d0d0; padding: 6px;">${cleanReadme}</div>
+          </div>
+
+          <!-- RIGHT COLUMN: GREEN (SMALLER SQUEEZED COMMIT LOG) -->
+          <div class="cmd-terminal-box" style="flex: 0.8; display: flex; flex-direction: column; height: 100%; border: 1px solid #1f8008;">
+            <div class="cmd-bar" style="background: linear-gradient(to right, #1f8008, #39d114);">📜 Commit Log</div>
+            <div class="cmd-body" style="flex: 1; font-size: 10px; overflow-y: auto; color: #00ff00; padding: 6px;">
+              ${commitsData.map(c => `
+                <div style="margin-bottom: 6px; border-bottom: 1px dashed #333; padding-bottom: 4px;">
+                  <span class="cmd-prompt" style="color:#ffff00;">> ${c.sha.substring(0, 7)}</span>
+                  <div style="color: #fff; margin: 2px 0; word-break: break-word;">${c.commit.message}</div>
+                  <small style="color: #888; font-size: 9px;">${c.commit.author.name} • ${new Date(c.commit.author.date).toLocaleDateString()}</small>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    `;
+  } catch (error) {
+    container.innerHTML = `<p style="color: red; padding: 15px;">❌ Failed to load repo data: ${error.message}</p>`;
+  } finally {
+    document.body.classList.remove('xp-loading');
   }
 }

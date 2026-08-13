@@ -3,9 +3,9 @@
    ============================================================ */
 @font-face {
   font-family: 'W95FA';
-  src: url('../W95FA/w95fa.woff2') format('woff2'),
-       url('../W95FA/w95fa.woff') format('woff'),
-       url('../W95FA/W95FA') format('opentype');
+  src: url('W95FA/w95fa.woff2') format('woff2'),
+       url('W95FA/w95fa.woff') format('woff'),
+       url('W95FA/W95FA') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -499,3 +499,8 @@ body {
 .taskbar-tabs { display: flex; gap: 4px; padding: 0 8px; flex: 1; }
 .tab-btn { background: linear-gradient(180deg, #3c81e3 0%, #1b58b8 100%); color: white; border: 1px solid #0c3679; border-radius: 3px; padding: 3px 10px; font-size: 12px; }
 .system-tray { color: white; padding: 0 12px; font-size: 11px; border-left: 1px solid #104393; height: 100%; display: flex; align-items: center; background: #0b3d91; }
+
+/* Windows XP Working Cursor */
+body.xp-loading, body.xp-loading * {
+  cursor: wait !important; /* Standard loading hourglass/pointer */
+}
