@@ -11,6 +11,7 @@ MuhammadAbbas.dev/
 │
 ├── index.html                 # Main OS Desktop Markup & Windows
 ├── README.md                  # Project Documentation & Architecture
+├── CNAME                      # Website Domain name
 │
 ├── css/
 │   └── style.css              # Windows XP Styling, Cursors & Animations
