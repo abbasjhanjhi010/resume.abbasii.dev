@@ -1,100 +1,545 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Homepage - Muhammad Abbas</title>
-    <link rel="shortcut icon" type="image/png" href = "Source\images\portfolioLogo(dark).png"/>
-    <link rel="stylesheet" href="Source/styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Didact+Gothic&family=PT+Serif&family=Raleway:wght@200;400;600&family=Satisfy&family=Tangerine:wght@700&display=swap" rel="stylesheet">
-    <script src="https://kit.fontawesome.com/85530bbb73.js" crossorigin="anonymous"></script>
-  <body>
-  <div>
-    </div>
-    <section class="hero">
-        <nav>
-          <img class = "logo" src = "Source/images/portfolioLogo.png" alt="Portoflio logo"/> 
-            <ul id = "nav-list"s>
-                <li><a href="#about">About</a></li> 
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-            <button class = "hamburger" id = "hamburger">
-              <i>
-                <svg  width="35" height="35"xmlns="http://www.w3.org/2000/svg" fill="#ffffff  " viewBox="0 0 448 512"><!--! Font Awesome Pro 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg>
-              </i>
-            </button>
-        </nav>
-        <div class = "hero-area">
-          <div class = "hero-text">
-            <h1 class = "cursiveName">Muhammad Abbas J.</h1>
-            <p1>Game Developer</p1>
-            <div></div>
-            <button class = "buttonText" id = "#about">About me</button>
-        </div>
-        <div class = "socials">
-          <div><a href = "https://twitter.com/MuhammadAbbasJ" class = "social">
-            <svg xmlns="http://www.w3.org/2000/svg" fill = "#ffffff" width="50" height="50" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
-          </a></div>
-          <div><a href = "https://www.linkedin.com/in/muhammad-abbas-j/" class = "social">
-            <svg xmlns="http://www.w3.org/2000/svg" fill = "#ffffff"  width="50" height="50" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-          </a></div>
-          <div><a href = "https://muhammadabbas.itch.io/" class = "social">
-            <svg xmlns="http://www.w3.org/2000/svg" height="50" width="50" viewBox="0 0 245.37069 220.73612"><path d="M31.99 1.365C21.287 7.72.2 31.945 0 38.298v10.516C0 62.144 12.46 73.86 23.773 73.86c13.584 0 24.902-11.258 24.903-24.62 0 13.362 10.93 24.62 24.515 24.62 13.586 0 24.165-11.258 24.165-24.62 0 13.362 11.622 24.62 25.207 24.62h.246c13.586 0 25.208-11.258 25.208-24.62 0 13.362 10.58 24.62 24.164 24.62 13.585 0 24.515-11.258 24.515-24.62 0 13.362 11.32 24.62 24.903 24.62 11.313 0 23.773-11.714 23.773-25.046V38.298c-.2-6.354-21.287-30.58-31.988-36.933C180.118.197 157.056-.005 122.685 0c-34.37.003-81.228.54-90.697 1.365zm65.194 66.217a28.025 28.025 0 0 1-4.78 6.155c-5.128 5.014-12.157 8.122-19.906 8.122a28.482 28.482 0 0 1-19.948-8.126c-1.858-1.82-3.27-3.766-4.563-6.032l-.006.004c-1.292 2.27-3.092 4.215-4.954 6.037a28.5 28.5 0 0 1-19.948 8.12c-.934 0-1.906-.258-2.692-.528-1.092 11.372-1.553 22.24-1.716 30.164l-.002.045c-.02 4.024-.04 7.333-.06 11.93.21 23.86-2.363 77.334 10.52 90.473 19.964 4.655 56.7 6.775 93.555 6.788h.006c36.854-.013 73.59-2.133 93.554-6.788 12.883-13.14 10.31-66.614 10.52-90.474-.022-4.596-.04-7.905-.06-11.93l-.003-.045c-.162-7.926-.623-18.793-1.715-30.165-.786.27-1.757.528-2.692.528a28.5 28.5 0 0 1-19.948-8.12c-1.862-1.822-3.662-3.766-4.955-6.037l-.006-.004c-1.294 2.266-2.705 4.213-4.563 6.032a28.48 28.48 0 0 1-19.947 8.125c-7.748 0-14.778-3.11-19.906-8.123a28.025 28.025 0 0 1-4.78-6.155 27.99 27.99 0 0 1-4.736 6.155 28.49 28.49 0 0 1-19.95 8.124c-.27 0-.54-.012-.81-.02h-.007c-.27.008-.54.02-.813.02a28.49 28.49 0 0 1-19.95-8.123 27.992 27.992 0 0 1-4.736-6.155zm-20.486 26.49l-.002.01h.015c8.113.017 15.32 0 24.25 9.746 7.028-.737 14.372-1.105 21.722-1.094h.006c7.35-.01 14.694.357 21.723 1.094 8.93-9.747 16.137-9.73 24.25-9.746h.014l-.002-.01c3.833 0 19.166 0 29.85 30.007L210 165.244c8.504 30.624-2.723 31.373-16.727 31.4-20.768-.773-32.267-15.855-32.267-30.935-11.496 1.884-24.907 2.826-38.318 2.827h-.006c-13.412 0-26.823-.943-38.318-2.827 0 15.08-11.5 30.162-32.267 30.935-14.004-.027-25.23-.775-16.726-31.4L46.85 124.08c10.684-30.007 26.017-30.007 29.85-30.007zm45.985 23.582v.006c-.02.02-21.863 20.08-25.79 27.215l14.304-.573v12.474c0 .584 5.74.346 11.486.08h.006c5.744.266 11.485.504 11.485-.08v-12.474l14.304.573c-3.928-7.135-25.79-27.215-25.79-27.215v-.006l-.003.002z" color="#000" fill="#fff"/></svg>
-          </a></div>
-          <div><a href = "https://www.youtube.com/@MuhammadAbbas01" class = "social">
-            <svg xmlns="http://www.w3.org/2000/svg" fill = "#ffffff" width="50" height="50" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg> 
-          </a></div>
-        </div>
-        </div>
-    </section>
-    <section class = "sub-section" id = "about">
-      <div class = 'information'>
-        <h2>About Me</h2>
-        <p class = "abbasIntro">A current high school student with a passion for creating games using the Unity engine. Currently also learning AI/ML.</p>
-        <button class = "buttonText">Contact</button>     <!-- TODO: CHANGE THE COLOR, THEN ON HOVER COLOURS FOR BOTH BUTTONS AND ADD SOME ANIMATION THEN ALSO ADD A SEPARATE CONTACT PAGE AND ADD A GOOD DESCRIPTION OF YOURSELF AND THEN POLISH THE WEBSITE, ALSO SUBMIT THE APPLICATIONS-->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Muhammad Abbas Jhanjhi - Portfolio OS</title>
+  
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230058e6'/><rect x='2' y='2' width='28' height='28' rx='4' fill='none' stroke='%232b88f0' stroke-width='2'/><text x='16' y='22' font-family='W95FA, Tahoma, sans-serif' font-weight='bold' font-size='14' fill='white' text-anchor='middle'>MJ</text></svg>">
+  
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+  <!-- DESKTOP WORKSPACE -->
+  <div id="desktop">
+
+    <!-- DESKTOP SELECTION MARQUEE BOX -->
+    <div id="selection-box"></div>
+
+    <!-- STICKY NOTE: "WHERE I WAS LAST SEEN" -->
+    <div id="activity-sticky-note" class="sticky-note">
+      <div class="sticky-pin">📌</div>
+      <div class="sticky-header">WHERE I WAS LAST SEEN</div>
+      <div class="sticky-content" id="sticky-activity-body">
+        <p class="sticky-loading">⏳ Checking GitHub activity...</p>
+        <p class="sticky-loading">⏳ Checking YouTube activity...</p>
       </div>
-      <div class = "headshot-container">
-        <img class = "headshot" src = "Source/images/Abbas.png" alt = "Muhammad Abbas J."/>
-      </div>  <!--Src means 'source', it cannot be replaced with another word-->
-    </section>
-    <section class = "sub-section-alternative"  id="projects">
-      <h2>Projects</h2>
-      <div class = "project-container">
-        <!--
-          <div class = "project-card">
-          <img src = "Desktop/project1"  alt = "Project 1"/>   Insert the project image here along with the alt name of prj image
-          <h3>ProjectOne</h3>
-          <p class = "subtext">Project descripton.Describing it in detail. Process:                                                      Outcome: </p>
-          <hr/>  hairline
-          <p class = "subtext"><a class = "projectLink" href = "http://github.com">View here</a></p>  attach link here (for project)
-        </div>
-        <div class = "project-card"></div>
-        <div class = "project-card"></div>
-        <div class = "project-card"></div>
-      </div>
-        -->
-        <p class = "WIP">Work in progress...</p>
-    </section>
-    <footer id = "Contact">  <!-- temporary-->
-    <h2 class = "cursiveName">Muhammad Abbas</h2>
-    <div class = "contactSocials">
-      <div><a href = "https://twitter.com/MuhammadAbbasJ" class = "footerSocials">
-        <svg xmlns="http://www.w3.org/2000/svg" fill = "#ffffff" width="40" height="40" viewBox="0 0 24 24"><path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg>
-      </a></div>
-      <div><a href = "https://www.linkedin.com/in/muhammad-abbas-j/" class = "footerSocials">
-        <svg xmlns="http://www.w3.org/2000/svg" fill = "#ffffff"  width="40" height="40" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-      </a></div>
-      <div><a href = "https://muhammadabbas.itch.io/" class = "footerSocials">
-        <svg xmlns="http://www.w3.org/2000/svg" height="40" width="40" viewBox="0 0 245.37069 220.73612"><path d="M31.99 1.365C21.287 7.72.2 31.945 0 38.298v10.516C0 62.144 12.46 73.86 23.773 73.86c13.584 0 24.902-11.258 24.903-24.62 0 13.362 10.93 24.62 24.515 24.62 13.586 0 24.165-11.258 24.165-24.62 0 13.362 11.622 24.62 25.207 24.62h.246c13.586 0 25.208-11.258 25.208-24.62 0 13.362 10.58 24.62 24.164 24.62 13.585 0 24.515-11.258 24.515-24.62 0 13.362 11.32 24.62 24.903 24.62 11.313 0 23.773-11.714 23.773-25.046V38.298c-.2-6.354-21.287-30.58-31.988-36.933C180.118.197 157.056-.005 122.685 0c-34.37.003-81.228.54-90.697 1.365zm65.194 66.217a28.025 28.025 0 0 1-4.78 6.155c-5.128 5.014-12.157 8.122-19.906 8.122a28.482 28.482 0 0 1-19.948-8.126c-1.858-1.82-3.27-3.766-4.563-6.032l-.006.004c-1.292 2.27-3.092 4.215-4.954 6.037a28.5 28.5 0 0 1-19.948 8.12c-.934 0-1.906-.258-2.692-.528-1.092 11.372-1.553 22.24-1.716 30.164l-.002.045c-.02 4.024-.04 7.333-.06 11.93.21 23.86-2.363 77.334 10.52 90.473 19.964 4.655 56.7 6.775 93.555 6.788h.006c36.854-.013 73.59-2.133 93.554-6.788 12.883-13.14 10.31-66.614 10.52-90.474-.022-4.596-.04-7.905-.06-11.93l-.003-.045c-.162-7.926-.623-18.793-1.715-30.165-.786.27-1.757.528-2.692.528a28.5 28.5 0 0 1-19.948-8.12c-1.862-1.822-3.662-3.766-4.955-6.037l-.006-.004c-1.294 2.266-2.705 4.213-4.563 6.032a28.48 28.48 0 0 1-19.947 8.125c-7.748 0-14.778-3.11-19.906-8.123a28.025 28.025 0 0 1-4.78-6.155 27.99 27.99 0 0 1-4.736 6.155 28.49 28.49 0 0 1-19.95 8.124c-.27 0-.54-.012-.81-.02h-.007c-.27.008-.54.02-.813.02a28.49 28.49 0 0 1-19.95-8.123 27.992 27.992 0 0 1-4.736-6.155zm-20.486 26.49l-.002.01h.015c8.113.017 15.32 0 24.25 9.746 7.028-.737 14.372-1.105 21.722-1.094h.006c7.35-.01 14.694.357 21.723 1.094 8.93-9.747 16.137-9.73 24.25-9.746h.014l-.002-.01c3.833 0 19.166 0 29.85 30.007L210 165.244c8.504 30.624-2.723 31.373-16.727 31.4-20.768-.773-32.267-15.855-32.267-30.935-11.496 1.884-24.907 2.826-38.318 2.827h-.006c-13.412 0-26.823-.943-38.318-2.827 0 15.08-11.5 30.162-32.267 30.935-14.004-.027-25.23-.775-16.726-31.4L46.85 124.08c10.684-30.007 26.017-30.007 29.85-30.007zm45.985 23.582v.006c-.02.02-21.863 20.08-25.79 27.215l14.304-.573v12.474c0 .584 5.74.346 11.486.08h.006c5.744.266 11.485.504 11.485-.08v-12.474l14.304.573c-3.928-7.135-25.79-27.215-25.79-27.215v-.006l-.003.002z" color="#000" fill="#fff"/></svg>
-      </a></div>
-      <div><a href = "https://www.youtube.com/@MuhammadAbbas01" class = "footerSocials">
-        <svg xmlns="http://www.w3.org/2000/svg" fill = "#ffffff" width="40" height="40" viewBox="0 0 24 24"><path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 8.816.029 6.185.484 8.549 4.385 8.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-8.816-.029-6.185-.484-8.549-4.385-8.816zm-10.615 12.816v-8l8 3.993-8 4.007z"/></svg> 
-      </a></div>
     </div>
-    <p class = "bottomPageContactLink">Contact</p>    <!-- href this to the separate contact page-->
-  </footer> 
-	<script src="Source/app.js"></script>
-  </body>
+
+    <!-- DESKTOP ICONS -->
+    <div class="desktop-icons">
+      
+      <!-- GITHUB ICON -->
+      <div class="desktop-icon-item link-shortcut" data-url="https://github.com/abbas-jhanjhi" data-type="github">
+        <svg class="pixel-icon-svg low-res" viewBox="0 0 16 16">
+          <rect width="16" height="16" fill="#181a1b"/>
+          <rect x="1" y="1" width="14" height="1" fill="#4a4d50"/>
+          <rect x="1" y="1" width="1" height="14" fill="#4a4d50"/>
+          <rect x="5" y="3" width="6" height="2" fill="#ffffff"/>
+          <rect x="4" y="5" width="8" height="6" fill="#ffffff"/>
+          <rect x="6" y="7" width="1" height="2" fill="#181a1b"/>
+          <rect x="9" y="7" width="1" height="2" fill="#181a1b"/>
+          <rect x="3" y="11" width="2" height="3" fill="#ffffff"/>
+          <rect x="11" y="11" width="2" height="3" fill="#ffffff"/>
+        </svg>
+        <span>GitHub.lnk</span>
+      </div>
+
+      <!-- LINKEDIN ICON -->
+      <div class="desktop-icon-item link-shortcut" data-url="https://linkedin.com/in/abbas-jhanjhi" data-type="linkedin">
+        <svg class="pixel-icon-svg low-res" viewBox="0 0 16 16">
+          <rect width="16" height="16" fill="#0055b3"/>
+          <rect x="1" y="1" width="14" height="1" fill="#3385ff"/>
+          <rect x="1" y="1" width="1" height="14" fill="#3385ff"/>
+          <rect x="3" y="4" width="2" height="2" fill="#ffffff"/>
+          <rect x="3" y="7" width="2" height="6" fill="#ffffff"/>
+          <rect x="7" y="7" width="2" height="6" fill="#ffffff"/>
+          <rect x="9" y="7" width="3" height="2" fill="#ffffff"/>
+          <rect x="10" y="9" width="2" height="4" fill="#ffffff"/>
+        </svg>
+        <span>LinkedIn.lnk</span>
+      </div>
+
+      <!-- YOUTUBE ICON -->
+      <div class="desktop-icon-item link-shortcut" data-url="https://youtube.com/@abbas-jhanjhi" data-type="youtube">
+        <svg class="pixel-icon-svg low-res" viewBox="0 0 16 16">
+          <rect width="16" height="16" fill="#cc0000"/>
+          <rect x="1" y="1" width="14" height="1" fill="#ff6666"/>
+          <rect x="1" y="1" width="1" height="14" fill="#ff6666"/>
+          <polygon points="6,4 12,8 6,12" fill="#ffffff" />
+        </svg>
+        <span>YouTube.lnk</span>
+      </div>
+
+      <!-- SECRET NOTES ICON -->
+      <div class="desktop-icon-item" onclick="openWindow('win-secret')">
+        <svg class="pixel-icon-svg low-res" viewBox="0 0 16 16">
+          <rect width="16" height="16" fill="#3a6ea5"/>
+          <rect x="3" y="2" width="10" height="12" fill="#fff8dc" stroke="#8b4513" stroke-width="1"/>
+          <rect x="5" y="4" width="6" height="1" fill="#8b4513"/>
+          <rect x="5" y="7" width="6" height="1" fill="#8b4513"/>
+          <rect x="5" y="10" width="4" height="1" fill="#8b4513"/>
+        </svg>
+        <span>Secret_Notes.txt</span>
+      </div>
+
+    </div>
+
+
+    <!-- ============================================================
+         1. HOME WINDOW (Home.html)
+         ============================================================ -->
+    <div id="win-home" class="xp-window theme-home active" style="top: 20px; left: 160px; width: 680px;">
+      <div class="title-bar" data-win-id="win-home">
+        <div class="title-text">🌐 C:\Users\Abbas\Home.html</div>
+        <div class="window-controls">
+          <div class="win-btn close" onclick="closeWindow('win-home')">X</div>
+        </div>
+      </div>
+      <div class="browser-nav">
+        <button class="nav-btn" onclick="openWindow('win-projects')">Projects.exe</button>
+        <button class="nav-btn" onclick="openWindow('win-skills')">TechStack.dll</button>
+        <button class="nav-btn" onclick="openWindow('win-resume')">Resume.txt</button>
+        <button class="nav-btn" onclick="openWindow('win-gallery')">Gallery.dir</button>
+        <button class="nav-btn" onclick="openWindow('win-contact')">Contact.exe</button>
+      </div>
+      <div class="window-body">
+        
+        <div class="home-header-row">
+          <div class="home-main-intro">
+            <h2>Hello! I'm Muhammad Abbas Jhanjhi 👋</h2>
+            <p class="subtitle">Bachelors of Science (Bs) — Computer Science Student @ Sunway University (2026–2029)</p>
+          </div>
+
+          <div class="quick-stats-badge">
+            <div class="badge-title">📌 AT A GLANCE</div>
+            <div class="badge-item"><strong>Status:</strong> CS Student</div>
+            <div class="badge-item"><strong>Location:</strong> Subang Jaya, MY</div>
+            <div class="badge-item"><strong>Available:</strong> Internships '26</div>
+          </div>
+        </div>
+
+        <div class="bio-box">
+          <p>I build scalable, modern web applications with functional user interfaces and robust system architectures.</p>
+        </div>
+
+        <div class="quick-launch-bar">
+          <span class="launch-label">🚀 QUICK LAUNCH:</span>
+          <button class="xp-btn launch-btn" onclick="openWindow('win-projects')">⚙️ Open Projects.exe</button>
+          <button class="xp-btn launch-btn" onclick="openWindow('win-skills')">🛠️ Open TechStack.dll</button>
+          <button class="xp-btn launch-btn" onclick="openWindow('win-resume')">📄 Open Resume.txt</button>
+          <button class="xp-btn launch-btn" onclick="openWindow('win-contact')">✉️ Open Contact.exe</button>
+        </div>
+
+        <div class="card">
+          <h3>🎯 Core Focus & Software Philosophy</h3>
+          <p>Passionate about full-stack engineering, algorithmic efficiency, and crafting intuitive user-centric applications. Currently focusing on modern JavaScript frameworks, systems programming in Python, and database architectures.</p>
+        </div>
+
+        <div class="cmd-terminal-box">
+          <div class="cmd-bar">C:\WINDOWS\system32\cmd.exe — System Log</div>
+          <div class="cmd-body">
+            <p><span class="cmd-prompt">C:\></span> sys_init --verbose</p>
+            <p><span class="cmd-ok">[SYS_OK]</span> Portfolio OS v2.0 loaded successfully.</p>
+            <p><span class="cmd-log">[GIT_LOG]</span> Clamped window bounds and restored context menu interactions.</p>
+            <p><span class="cmd-log">[STATUS]</span> Currently pursuing Bs Computer Science @ Sunway University.</p>
+            <p><span class="cmd-prompt">C:\></span> <span class="cmd-cursor">_</span></p>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- ============================================================
+         2. PROJECTS WINDOW (Projects.exe)
+         ============================================================ -->
+    <div id="win-projects" class="xp-window theme-projects" style="top: 50px; left: 220px; width: 620px;">
+      <div class="title-bar" data-win-id="win-projects">
+        <div class="title-text">⚙️ C:\Portfolio\Projects.exe</div>
+        <div class="window-controls">
+          <div class="win-btn close" onclick="closeWindow('win-projects')">X</div>
+        </div>
+      </div>
+      <div class="window-body">
+        <h2>Featured Projects</h2>
+        <p class="section-desc">A selection of featured applications and experimental software.</p>
+        
+        <div class="project-list">
+          <div class="project-item">
+            <div class="project-icon">📋</div>
+            <div class="project-info">
+              <h4>TaskFlow</h4>
+              <p>A productivity app to organize your daily tasks efficiently.</p>
+            </div>
+            <button class="xp-btn action-btn link-shortcut" data-url="https://github.com/abbas-jhanjhi/taskflow" data-type="github">View Repo</button>
+          </div>
+
+          <div class="project-item">
+            <div class="project-icon">📈</div>
+            <div class="project-info">
+              <h4>AlgoVisualizer</h4>
+              <p>Visualize complex algorithms and data structures in real-time.</p>
+            </div>
+            <button class="xp-btn action-btn link-shortcut" data-url="https://github.com/abbas-jhanjhi/algovisualizer" data-type="github">View Repo</button>
+          </div>
+
+          <div class="project-item">
+            <div class="project-icon">💬</div>
+            <div class="project-info">
+              <h4>StudyBuddy</h4>
+              <p>A collaborative study platform built for university students.</p>
+            </div>
+            <button class="xp-btn action-btn link-shortcut" data-url="https://github.com/abbas-jhanjhi/studybuddy" data-type="github">View Repo</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ============================================================
+         3. SKILLS WINDOW (TechStack.dll)
+         ============================================================ -->
+    <div id="win-skills" class="xp-window theme-skills" style="top: 70px; left: 260px; width: 600px;">
+      <div class="title-bar" data-win-id="win-skills">
+        <div class="title-text">🛠️ C:\System32\TechStack.dll</div>
+        <div class="window-controls">
+          <div class="win-btn close" onclick="closeWindow('win-skills')">X</div>
+        </div>
+      </div>
+      <div class="window-body">
+        
+        <div class="skills-header-container">
+          <div>
+            <h2>Tech Stack & System Components</h2>
+            <p class="section-desc">Technologies loaded in system memory.</p>
+          </div>
+          <div class="skills-legend-key">
+            <span class="legend-title">KEY INDEX:</span>
+            <div class="legend-items">
+              <span class="key-badge lvl-expert">Expert</span>
+              <span class="key-badge lvl-advanced">Advanced</span>
+              <span class="key-badge lvl-intermediate">Interm.</span>
+              <span class="key-badge lvl-beginner">Beginner</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="skills-grid">
+          <div class="skill-card-pixel lvl-expert">
+            <div class="level-indicator">EXPERT</div>
+            <svg class="pixel-skill-svg low-res" viewBox="0 0 16 16"><path d="M2 1 L14 1 L13 14 L8 15 L3 14 Z" fill="#e44d26"/><path d="M8 2 L13 2 L12 13 L8 14 Z" fill="#f16529"/><rect x="5" y="4" width="6" height="2" fill="#fff"/><rect x="5" y="8" width="6" height="2" fill="#fff"/></svg>
+            <span class="pixel-font">HTML5</span>
+          </div>
+
+          <div class="skill-card-pixel lvl-expert">
+            <div class="level-indicator">EXPERT</div>
+            <svg class="pixel-skill-svg low-res" viewBox="0 0 16 16"><path d="M2 1 L14 1 L13 14 L8 15 L3 14 Z" fill="#264de4"/><path d="M8 2 L13 2 L12 13 L8 14 Z" fill="#2965f1"/><rect x="5" y="4" width="6" height="2" fill="#fff"/><rect x="5" y="8" width="6" height="2" fill="#fff"/></svg>
+            <span class="pixel-font">CSS3</span>
+          </div>
+
+          <div class="skill-card-pixel lvl-advanced">
+            <div class="level-indicator">ADVANCED</div>
+            <svg class="pixel-skill-svg low-res" viewBox="0 0 16 16"><rect width="16" height="16" fill="#f7df1e"/><rect x="8" y="7" width="2" height="6" fill="#000"/><rect x="12" y="7" width="2" height="6" fill="#000"/></svg>
+            <span class="pixel-font">JAVASCRIPT</span>
+          </div>
+
+          <div class="skill-card-pixel lvl-advanced">
+            <div class="level-indicator">ADVANCED</div>
+            <svg class="pixel-skill-svg low-res" viewBox="0 0 16 16"><rect x="1" y="1" width="7" height="7" fill="#3776ab"/><rect x="8" y="8" width="7" height="7" fill="#ffd43b"/></svg>
+            <span class="pixel-font">PYTHON</span>
+          </div>
+
+          <div class="skill-card-pixel lvl-intermediate">
+            <div class="level-indicator">INTERM.</div>
+            <svg class="pixel-skill-svg low-res" viewBox="0 0 16 16"><circle cx="8" cy="8" r="3" fill="#61dafb"/><rect x="2" y="7" width="12" height="2" fill="#61dafb"/></svg>
+            <span class="pixel-font">REACT</span>
+          </div>
+
+          <div class="skill-card-pixel lvl-intermediate">
+            <div class="level-indicator">INTERM.</div>
+            <svg class="pixel-skill-svg low-res" viewBox="0 0 16 16"><polygon points="8,1 15,5 15,12 8,15 1,12 1,5" fill="#68a063"/></svg>
+            <span class="pixel-font">NODE.JS</span>
+          </div>
+
+          <div class="skill-card-pixel lvl-beginner">
+            <div class="level-indicator">BEGINNER</div>
+            <svg class="pixel-skill-svg low-res" viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="3" fill="#00758f"/><rect x="2" y="7" width="12" height="3" fill="#00758f"/><rect x="2" y="12" width="12" height="3" fill="#f29111"/></svg>
+            <span class="pixel-font">MYSQL</span>
+          </div>
+
+          <div class="skill-card-pixel lvl-advanced">
+            <div class="level-indicator">ADVANCED</div>
+            <svg class="pixel-skill-svg low-res" viewBox="0 0 16 16"><rect width="16" height="16" rx="2" fill="#f05032"/><circle cx="5" cy="5" r="2" fill="#fff"/><circle cx="11" cy="5" r="2" fill="#fff"/><circle cx="11" cy="11" r="2" fill="#fff"/></svg>
+            <span class="pixel-font">GIT</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ============================================================
+         4. RESUME WINDOW (Resume.txt)
+         ============================================================ -->
+    <div id="win-resume" class="xp-window theme-resume" style="top: 90px; left: 300px; width: 560px;">
+      <div class="title-bar" data-win-id="win-resume">
+        <div class="title-text">📄 C:\Documents\Resume.txt - Notepad</div>
+        <div class="window-controls">
+          <div class="win-btn close" onclick="closeWindow('win-resume')">X</div>
+        </div>
+      </div>
+      <div class="window-body">
+        <h2>Resume & Qualifications</h2>
+        
+        <div class="card notepad-card">
+          <h3>🎓 Education</h3>
+          <p><strong>Bachelors of Science (Bs) — Computer Science</strong></p>
+          <p>Sunway University | 2026 – 2029</p>
+        </div>
+
+        <div class="card notepad-card">
+          <h3>💼 Previously Worked Jobs & Experience</h3>
+          <ul class="experience-list">
+            <li>
+              <strong>Software Engineering Intern</strong> — Tech Solutions (2025)
+              <p>Developed responsive web interfaces and assisted in API integration.</p>
+            </li>
+            <li>
+              <strong>Freelance Web Developer</strong> (2024 - Present)
+              <p>Designed and deployed custom client websites and interactive tools.</p>
+            </li>
+          </ul>
+        </div>
+
+        <div class="card notepad-card">
+          <h3>🏆 Awards & Certifications</h3>
+          <ul class="experience-list">
+            <li>Dean's Honor Roll Recipient — 2026</li>
+            <li>Sunway Hackathon Finalist — 2026</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ============================================================
+         5. GALLERY WINDOW (SpecialEvents.dir)
+         ============================================================ -->
+    <div id="win-gallery" class="xp-window theme-gallery" style="top: 110px; left: 340px; width: 520px;">
+      <div class="title-bar" data-win-id="win-gallery">
+        <div class="title-text">🖼️ C:\Pictures\SpecialEvents.dir</div>
+        <div class="window-controls">
+          <div class="win-btn close" onclick="closeWindow('win-gallery')">X</div>
+        </div>
+      </div>
+      <div class="folder-bar">
+        <span>Address: <code>C:\Pictures\SpecialEvents.dir</code></span>
+      </div>
+      <div class="window-body">
+        <h2>Special Events Gallery</h2>
+        <p class="section-desc">Highlights from tech conferences, hackathons, and campus events.</p>
+        
+        <div class="grid-2">
+          <div class="card photo-card">
+            <div class="photo-placeholder">📷 Sunway Tech Fest</div>
+            <span>University Tech Fest 2026</span>
+          </div>
+          <div class="card photo-card">
+            <div class="photo-placeholder">🏆 Hackathon Demo</div>
+            <span>Project Presentation Day</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ============================================================
+         6. CONTACT WINDOW (Contact.exe)
+         ============================================================ -->
+    <div id="win-contact" class="xp-window theme-contact" style="top: 130px; left: 380px; width: 480px;">
+      <div class="title-bar" data-win-id="win-contact">
+        <div class="title-text">✉️ C:\Messenger\Contact.exe</div>
+        <div class="window-controls">
+          <div class="win-btn close" onclick="closeWindow('win-contact')">X</div>
+        </div>
+      </div>
+      <div class="window-body">
+        <h2>Contact Muhammad Abbas Jhanjhi</h2>
+        <p class="section-desc">Send a direct message or connect on social platforms.</p>
+        
+        <div class="card">
+          <p><strong>Email:</strong> abbas.jhanjhi@example.com</p>
+          <p><strong>Location:</strong> Sunway University, Malaysia</p>
+        </div>
+
+        <form class="retro-form" action="https://formspree.io/f/xbjnqwe" method="POST" onsubmit="handleFormSubmit(event)">
+          <div class="form-group">
+            <label for="form-name">Your Name:</label>
+            <input type="text" id="form-name" name="name" required placeholder="John Doe">
+          </div>
+          <div class="form-group">
+            <label for="form-email">Your Email:</label>
+            <input type="email" id="form-email" name="email" required placeholder="john@example.com">
+          </div>
+          <div class="form-group">
+            <label for="form-message">Message:</label>
+            <textarea id="form-message" name="message" rows="4" required placeholder="Write your message here..."></textarea>
+          </div>
+          <button type="submit" class="xp-btn">Send Message 📨</button>
+        </form>
+      </div>
+    </div>
+
+
+    <!-- ============================================================
+         7. SECRET EASTER EGG WINDOW
+         ============================================================ -->
+    <div id="win-secret" class="xp-window theme-resume" style="top: 80px; left: 240px; width: 440px;">
+      <div class="title-bar" data-win-id="win-secret">
+        <div class="title-text">🔍 C:\Windows\Secret_Notes.txt</div>
+        <div class="window-controls">
+          <div class="win-btn close" onclick="closeWindow('win-secret')">X</div>
+        </div>
+      </div>
+      <div class="window-body">
+        <h2>🎉 You Found the Easter Egg!</h2>
+        <p class="section-desc">Unessential fun facts about Muhammad Abbas Jhanjhi:</p>
+        <div class="card notepad-card">
+          <p>☕ Powered by iced coffee & lofi beats.</p>
+          <p>💻 Favorite OS Aesthetics: Windows XP & Classic Mac OS.</p>
+          <p>⚡ High Score: Solved 50+ algorithm challenges in 1 week.</p>
+          <p>🎓 Expected Graduation: Sunway University 2029.</p>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ============================================================
+         8. RETRO INTERNET EXPLORER 6 BROWSER WRAPPER
+         ============================================================ -->
+    <div id="win-ie" class="xp-window theme-ie" style="top: 40px; left: 140px; width: 680px;">
+      <div class="title-bar" data-win-id="win-ie">
+        <div class="title-text" id="ie-window-title">🌐 C:\Program Files\Internet Explorer\iexplore.exe</div>
+        <div class="window-controls">
+          <div class="win-btn close" onclick="closeWindow('win-ie')">X</div>
+        </div>
+      </div>
+      
+      <div class="ie-toolbar">
+        <div class="ie-tools">
+          <button class="ie-tool-btn" onclick="alert('Navigating Back...')">◀ Back</button>
+          <button class="ie-tool-btn" onclick="alert('Navigating Forward...')">▶ Forward</button>
+          <button class="ie-tool-btn" onclick="refreshIeProfile()">🔄 Refresh</button>
+          <button class="ie-tool-btn" onclick="alert('Home Page')">🏠 Home</button>
+        </div>
+        <div class="ie-address-bar">
+          <span class="address-label">Address:</span>
+          <input type="text" id="ie-url-input" class="ie-input" readonly value="https://github.com/abbas-jhanjhi">
+          <button class="ie-go-btn" onclick="refreshIeProfile()">Go ►</button>
+        </div>
+      </div>
+
+      <div class="window-body ie-body" id="ie-render-container">
+        <!-- Rendered via JS -->
+      </div>
+
+      <div class="ie-status-bar">
+        <span>🌐 Live API Connected</span>
+        <span>Internet Explorer 6.0</span>
+      </div>
+    </div>
+
+  </div>
+
+
+  <!-- START MENU -->
+  <div id="xp-start-menu">
+    <div class="start-menu-header">
+      <div class="user-avatar">👤</div>
+      <span class="user-name">Muhammad Abbas Jhanjhi</span>
+    </div>
+    <div class="start-menu-body">
+      <div class="start-left-col">
+        <div class="start-item" onclick="openWindow('win-contact')">
+          <span class="start-icon">✉️</span>
+          <div><strong>Contact.exe</strong><div class="start-subtext">Send Message</div></div>
+        </div>
+        <div class="start-item" onclick="openWindow('win-projects')">
+          <span class="start-icon">⚙️</span>
+          <div><strong>Projects.exe</strong><div class="start-subtext">View Applications</div></div>
+        </div>
+        <div class="start-item" onclick="openWindow('win-skills')">
+          <span class="start-icon">🛠️</span>
+          <div><strong>TechStack.dll</strong><div class="start-subtext">System Components</div></div>
+        </div>
+        <div class="start-item" onclick="openWindow('win-secret')">
+          <span class="start-icon">📝</span>
+          <div><strong>Secret_Notes.txt</strong><div class="start-subtext">Notepad Trivia</div></div>
+        </div>
+        <div class="start-divider"></div>
+        <div class="start-item" onclick="openWindow('win-home')">
+          <span class="start-icon">🌐</span>
+          <div><strong>Home.html</strong><span style="color:#2e7d32; font-size:10px;">►</span></div>
+        </div>
+      </div>
+      <div class="start-right-col">
+        <div class="start-right-item" onclick="openWindow('win-resume')"><span>📁 Resume.txt</span></div>
+        <div class="start-right-item" onclick="openWindow('win-skills')"><span>💻 TechStack.dll</span></div>
+        <div class="start-right-item" onclick="openWindow('win-gallery')"><span>🌐 Gallery.dir</span></div>
+        <div class="start-right-divider"></div>
+        <div class="start-right-item" onclick="openWindow('win-contact')"><span>⚙️ Contact.exe</span></div>
+        <div class="start-right-item" onclick="openWindow('win-secret')"><span>🔒 Secret_Notes.txt</span></div>
+      </div>
+    </div>
+    <div class="start-menu-footer">
+      <button class="start-footer-btn logoff" onclick="alert('Logged off from Portfolio OS')">🔑 Log Off</button>
+      <button class="start-footer-btn shutdown" onclick="alert('System Shutdown. Refresh page to restart.')">🌰 Shut Down</button>
+    </div>
+  </div>
+
+
+  <!-- UNIVERSAL RIGHT-CLICK CONTEXT MENU -->
+  <div id="global-context-menu" class="win11-context-menu">
+    <div id="link-menu-group" style="display:none;">
+      <div class="menu-row" id="ctx-open-ie"><span>🌐 Open in iexplore.exe</span></div>
+      <div class="menu-row" id="ctx-open-newtab"><span>🔗 Open in New Browser Tab</span></div>
+      <div class="menu-row" id="ctx-copy-link"><span>📋 Copy Link Address</span></div>
+      <div class="menu-line"></div>
+    </div>
+
+    <div class="menu-row" onclick="alert('View Options')"><span>🪟 View</span> <span>›</span></div>
+    <div class="menu-row" onclick="alert('Sort By Options')"><span>🔀 Sort by</span> <span>›</span></div>
+    <div class="menu-row" onclick="location.reload()"><span>🔄 Refresh</span></div>
+    <div class="menu-line"></div>
+    <div class="menu-row" onclick="alert('New Item Created')"><span>➕ New</span> <span>›</span></div>
+    <div class="menu-line"></div>
+    <div class="menu-row" onclick="openWindow('win-skills')"><span>⚙️ Display settings</span></div>
+    <div class="menu-row" onclick="openWindow('win-gallery')"><span>🎨 Personalize</span></div>
+    <div class="menu-line"></div>
+    <div class="menu-row" onclick="openWindow('win-projects')"><span>💻 Open in CMD.exe</span></div>
+    <div class="menu-row" onclick="openWindow('win-secret')"><span>📝 Secret_Notes.txt</span></div>
+  </div>
+
+
+  <!-- TASKBAR -->
+  <div id="taskbar">
+    <button class="start-btn" id="start-button-toggle">
+      <span style="font-weight: 900; font-size: 14px;">start</span>
+    </button>
+    <div class="taskbar-tabs">
+      <button class="tab-btn" onclick="openWindow('win-home')">Home.html</button>
+      <button class="tab-btn" onclick="openWindow('win-projects')">Projects.exe</button>
+      <button class="tab-btn" onclick="openWindow('win-skills')">TechStack.dll</button>
+      <button class="tab-btn" onclick="openWindow('win-resume')">Resume.txt</button>
+      <button class="tab-btn" onclick="openWindow('win-gallery')">Gallery.dir</button>
+      <button class="tab-btn" onclick="openWindow('win-contact')">Contact.exe</button>
+    </div>
+    <div class="system-tray" id="clock">12:00 PM</div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
 </html>
