@@ -3,9 +3,9 @@
    ============================================================ */
 @font-face {
   font-family: 'W95FA';
-  src: url('../W95FA/w95fa.woff2') format('woff2'),
-       url('../W95FA/w95fa.woff') format('woff'),
-       url('../W95FA/W95FA') format('opentype');
+  src: url('W95FA/w95fa.woff2') format('woff2'),
+       url('W95FA/w95fa.woff') format('woff'),
+       url('W95FA/W95FA') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
