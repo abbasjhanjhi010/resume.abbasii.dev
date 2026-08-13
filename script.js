@@ -481,6 +481,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // ============================================================
+  // NEW LINK-SHORTCUT CLICK LISTENER (GITHUB REPO INSPECTOR)
+  // ============================================================
+  document.addEventListener('click', function (e) {
+    const shortcut = e.target.closest('.link-shortcut');
+    if (shortcut && !e.target.closest('#global-context-menu')) {
+      const rawUrl = shortcut.getAttribute('data-url');
+      
+      if (rawUrl && rawUrl.includes('github.com/')) {
+        const cleanPath = rawUrl.replace(/^https?:\/\/(www\.)?github\.com\//, '');
+        const parts = cleanPath.split('/').filter(Boolean);
+        
+        // If it points to a specific repository (owner/repo)
+        if (parts.length >= 2) {
+          e.preventDefault();
+          const owner = parts[0];
+          const repo = parts[1];
+
+          openWindow('win-ie');
+
+          const ieInput = document.getElementById('ie-url-input');
+          if (ieInput) ieInput.value = rawUrl;
+
+          loadGitHubRepoData(owner, repo, 'ie-render-container');
+        }
+      }
+    }
+  });
+
   // Audio Handler
   const clickSound = new Audio("assets/audio/click.mp3");
   const base64Click = new Audio("data:audio/wav;base64,UklGRl9vAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YUtvAACAgICAgICAgICAgICAgICAgICAgICAgICA3p2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ3Gvampqa3GzMbG3eTdy/Dy493k59/o5eXm6ODq6efm5+3v8/X2+f39");
@@ -535,5 +564,98 @@ async function handleFormSubmit(e) {
     }
   } catch (error) {
     alert("Network error. Please try again later.");
+  }
+}
+
+
+// Github Page API Refreshing 
+// Github Page API Refreshing (Updated with README, Contributors & High-Vis Button)
+async function loadGitHubRepoData(owner, repo, windowContentId) {
+  const container = document.getElementById(windowContentId);
+  container.innerHTML = `<p class="sticky-loading" style="padding:15px;">⏳ Fetching live repository data, contributors, and README from GitHub...</p>`;
+
+  try {
+    // Parallel API Requests for performance
+    const [repoRes, commitsRes, contribRes, readmeRes] = await Promise.all([
+      fetch(`https://api.github.com/repos/${owner}/${repo}`),
+      fetch(`https://api.github.com/repos/${owner}/${repo}/commits?per_page=3`),
+      fetch(`https://api.github.com/repos/${owner}/${repo}/contributors?per_page=5`),
+      fetch(`https://api.github.com/repos/${owner}/${repo}/readme`, {
+        headers: { 'Accept': 'application/vnd.github.raw+json' }
+      })
+    ]);
+
+    if (!repoRes.ok) throw new Error('Repository not found');
+    const repoData = await repoRes.json();
+    const commitsData = commitsRes.ok ? await commitsRes.json() : [];
+    const contribData = contribRes.ok ? await contribRes.json() : [];
+    const readmeData = readmeRes.ok ? await readmeRes.text() : 'No README.md found in repository.';
+
+    // Sanitize README HTML tags to avoid breaking the XP layout
+    const cleanReadme = readmeData
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+
+    // Build Contributors HTML
+    const contribHtml = contribData.length > 0 ? contribData.map(c => `
+      <a href="${c.html_url}" target="_blank" style="display:inline-flex; align-items:center; gap:4px; background:#fff; border:1px solid #7f9db9; padding:2px 6px; text-decoration:none; color:#000; font-size:11px;">
+        <img src="${c.avatar_url}" style="width:14px; height:14px; border-radius:50%;">
+        <strong>${c.login}</strong> (${c.contributions})
+      </a>
+    `).join(' ') : '<span>No contributors data.</span>';
+
+    // Render Window Body
+    container.innerHTML = `
+      <div style="padding: 10px; font-family: Tahoma, sans-serif;">
+        
+        <!-- HIGH VISIBILITY TOP ACTION BAR -->
+        <div style="background: linear-gradient(to bottom, #225ad2, #00309c); padding: 8px 12px; border-radius: 3px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.4);">
+          <span style="color: #fff; font-weight: bold; font-size: 12px;">🔗 Official Repository Source</span>
+          <a class="xp-btn" href="${repoData.html_url}" target="_blank" rel="noopener noreferrer" 
+             style="background: linear-gradient(to bottom, #39d114, #1f8008); color: white; font-weight: bold; border: 1px solid #144e04; padding: 5px 14px; text-decoration: none; border-radius: 3px; text-shadow: 1px 1px 1px #000; box-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+             🚀 Open Live Repo on GitHub.com ►
+          </a>
+        </div>
+
+        <!-- REPO DETAILS -->
+        <div class="card" style="margin-bottom: 10px;">
+          <h3 style="margin:0 0 6px 0;">📦 ${repoData.name} <span style="font-size: 11px; color: #666;">(${repoData.visibility})</span></h3>
+          <p style="margin:0 0 8px 0; font-size: 12px;">${repoData.description || 'No description provided.'}</p>
+          <div style="font-size: 11px; background: #f0f0f0; padding: 6px; border: 1px inset #d0d0d0; display: flex; gap: 12px; margin-bottom: 8px;">
+            <span>⭐ Stars: <strong>${repoData.stargazers_count}</strong></span>
+            <span>🍴 Forks: <strong>${repoData.forks_count}</strong></span>
+            <span>🛠️ Language: <strong>${repoData.language || 'N/A'}</strong></span>
+          </div>
+
+          <!-- CONTRIBUTORS -->
+          <div style="font-size: 11px;">
+            <strong style="display:block; margin-bottom:4px;">👥 Contributors:</strong>
+            <div style="display:flex; flex-wrap:wrap; gap:4px;">${contribHtml}</div>
+          </div>
+        </div>
+
+        <!-- GIT COMMIT TERMINAL -->
+        <div class="cmd-terminal-box" style="margin-bottom: 10px;">
+          <div class="cmd-bar">Git Commit Log — Latest Updates</div>
+          <div class="cmd-body" style="font-size: 11px; max-height: 80px; overflow-y: auto;">
+            ${commitsData.map(c => `
+              <p style="margin: 2px 0;">
+                <span class="cmd-prompt">${c.sha.substring(0, 7)}:</span> ${c.commit.message} 
+                <br><small style="color: #888;">by ${c.commit.author.name} on ${new Date(c.commit.author.date).toLocaleDateString()}</small>
+              </p>
+            `).join('')}
+          </div>
+        </div>
+
+        <!-- README PREVIEW TERMINAL -->
+        <div class="cmd-terminal-box">
+          <div class="cmd-bar">📄 README.md Preview</div>
+          <div class="cmd-body" style="font-size: 11px; max-height: 140px; overflow-y: auto; white-space: pre-wrap; font-family: monospace; color: #d0d0d0;">${cleanReadme}</div>
+        </div>
+
+      </div>
+    `;
+  } catch (error) {
+    container.innerHTML = `<p style="color: red; padding: 15px;">❌ Failed to load repo data: ${error.message}</p>`;
   }
 }
