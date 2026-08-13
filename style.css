@@ -1,11 +1,11 @@
 /* ============================================================
-   LOCAL W95FA FONT IMPORT & STICKY NOTE WIDGET STYLING
+   LOCAL W95FA FONT IMPORT & OS LAYOUT
    ============================================================ */
 @font-face {
   font-family: 'W95FA';
-  src: url('W95FA/w95fa.woff2') format('woff2'),
-       url('W95FA/w95fa.woff') format('woff'),
-       url('W95FA/W95FA') format('opentype');
+  src: url('../W95FA/w95fa.woff2') format('woff2'),
+       url('../W95FA/w95fa.woff') format('woff'),
+       url('../W95FA/W95FA') format('opentype');
   font-weight: normal;
   font-style: normal;
 }
@@ -57,9 +57,7 @@ body {
   padding: 20px;
 }
 
-/* ============================================================
-   SEPARATE STICKY NOTE: "WHERE I WAS LAST SEEN"
-   ============================================================ */
+/* STICKY NOTE: "WHERE I WAS LAST SEEN" */
 .sticky-note {
   position: absolute;
   top: 20px;
@@ -166,7 +164,7 @@ body {
   image-rendering: crisp-edges !important;
 }
 
-/* HOME PAGE LAYOUT */
+/* HOME PAGE STYLES */
 .home-header-row {
   display: flex;
   justify-content: space-between;

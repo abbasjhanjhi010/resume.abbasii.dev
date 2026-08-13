@@ -1,8 +1,8 @@
 // ============================================================
 // CONFIGURATION: GITHUB & YOUTUBE DATA
 // ============================================================
-const GITHUB_USERNAME = 'abbas-jhanjhi';
-const YOUTUBE_API_KEY = 'YOUR_YOUTUBE_API_KEY';
+const GITHUB_USERNAME = 'muhammadabbas010';
+const YOUTUBE_API_KEY = 'AIzaSyBrCVa8EPOCb6A3WTXfT6n81CHok7obSEs';
 const YOUTUBE_CHANNEL_ID = 'UCVZtMizbzKU5VcH7Zv2QGDw';
 
 // ============================================================
@@ -45,55 +45,76 @@ function closeWindow(winId) {
 
 
 // ============================================================
-// 2. LIVE GITHUB ACTIVITY STICKY NOTE HANDLER ("WHERE I WAS LAST SEEN")
+// 2. DUAL GITHUB + YOUTUBE ACTIVITY STICKY NOTE HANDLER
 // ============================================================
-async function fetchGithubActivity() {
+async function fetchLatestCombinedActivity() {
   const container = document.getElementById('sticky-activity-body');
   if (!container) return;
 
+  let latestActivity = null;
+
+  // 1. Check GitHub Activity
   try {
-    const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events/public`);
-    if (!response.ok) throw new Error('GitHub API Error');
-
-    const events = await response.json();
-    if (!events || events.length === 0) {
-      container.innerHTML = `<p class="sticky-activity-item">No activity found for the last 2 weeks.</p>`;
-      return;
+    const ghRes = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/events/public`);
+    if (ghRes.ok) {
+      const ghEvents = await ghRes.json();
+      if (ghEvents && ghEvents.length > 0) {
+        const ev = ghEvents[0];
+        const date = new Date(ev.created_at);
+        const repo = ev.repo.name.replace(`${GITHUB_USERNAME}/`, '');
+        let msg = `Pushed code to ${repo}`;
+        if (ev.type === 'PushEvent' && ev.payload.commits && ev.payload.commits.length > 0) {
+          msg = `Pushed to ${repo}: "${ev.payload.commits[0].message}"`;
+        }
+        latestActivity = { type: 'github', text: msg, date: date };
+      }
     }
-
-    const latestEvent = events[0];
-    const eventDate = new Date(latestEvent.created_at);
-    const now = new Date();
-    const twoWeeksInMs = 14 * 24 * 60 * 60 * 1000;
-
-    // Check if event is within the last 14 days
-    if (now - eventDate > twoWeeksInMs) {
-      container.innerHTML = `<p class="sticky-activity-item">No activity found for the last 2 weeks.</p>`;
-      return;
-    }
-
-    const repoName = latestEvent.repo.name.replace(`${GITHUB_USERNAME}/`, '');
-    let actionDesc = `Active on ${repoName}`;
-
-    if (latestEvent.type === 'PushEvent' && latestEvent.payload.commits && latestEvent.payload.commits.length > 0) {
-      actionDesc = `Pushed to ${repoName}: "${latestEvent.payload.commits[0].message}"`;
-    } else if (latestEvent.type === 'CreateEvent') {
-      actionDesc = `Created ${latestEvent.payload.ref_type || 'repo'} in ${repoName}`;
-    }
-
-    // Relative time formatting
-    const daysAgo = Math.floor((now - eventDate) / (1000 * 60 * 60 * 24));
-    const hoursAgo = Math.floor((now - eventDate) / (1000 * 60 * 60));
-    const timeText = daysAgo > 0 ? `${daysAgo} day${daysAgo > 1 ? 's' : ''} ago` : `${hoursAgo} hour${hoursAgo > 1 ? 's' : ''} ago`;
-
-    container.innerHTML = `
-      <p class="sticky-activity-item">🐙 ${actionDesc}</p>
-      <span class="sticky-time">🕒 ${timeText}</span>
-    `;
-
-  } catch (err) {
-    container.innerHTML = `<p class="sticky-activity-item">No activity found for the last 2 weeks.</p>`;
+  } catch (e) {
+    console.error("GitHub Sticky Fetch Error:", e);
   }
+
+  // 2. Check YouTube Activity
+  try {
+    if (YOUTUBE_API_KEY && YOUTUBE_API_KEY !== 'YOUR_YOUTUBE_API_KEY') {
+      const playlistId = 'UU' + YOUTUBE_CHANNEL_ID.substring(2);
+      const ytRes = await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${playlistId}&maxResults=1&key=${YOUTUBE_API_KEY}`);
+      if (ytRes.ok) {
+        const ytData = await ytRes.json();
+        if (ytData.items && ytData.items.length > 0) {
+          const item = ytData.items[0].snippet;
+          const date = new Date(item.publishedAt);
+          const msg = `Uploaded video: "${item.title}"`;
+
+          if (!latestActivity || date > latestActivity.date) {
+            latestActivity = { type: 'youtube', text: msg, date: date };
+          }
+        }
+      }
+    }
+  } catch (e) {
+    console.error("YouTube Sticky Fetch Error:", e);
+  }
+
+  // 3. Check 2-Week Window (14 Days)
+  const now = new Date();
+  const twoWeeksInMs = 14 * 24 * 60 * 60 * 1000;
+
+  if (!latestActivity || (now - latestActivity.date) > twoWeeksInMs) {
+    container.innerHTML = `<p class="sticky-activity-item">No activity found for the last 2 weeks.</p>`;
+    return;
+  }
+
+  const daysAgo = Math.floor((now - latestActivity.date) / (1000 * 60 * 60 * 24));
+  const hoursAgo = Math.floor((now - latestActivity.date) / (1000 * 60 * 60));
+  let timeStr = daysAgo > 0 ? `${daysAgo} day${daysAgo > 1 ? 's' : ''} ago` : `${hoursAgo} hour${hoursAgo > 1 ? 's' : ''} ago`;
+  if (daysAgo === 0 && hoursAgo === 0) timeStr = 'Just now';
+
+  const icon = latestActivity.type === 'github' ? '🐙' : '📺';
+
+  container.innerHTML = `
+    <p class="sticky-activity-item">${icon} ${latestActivity.text}</p>
+    <span class="sticky-time">🕒 ${timeStr}</span>
+  `;
 }
 
 
@@ -249,12 +270,12 @@ async function renderIeProfileContent(type) {
 
 
 // ============================================================
-// 4. EVENT LISTENERS & STRICT DRAG BOUNDARY CLAMPING
+// 4. EVENT LISTENERS & CONTEXT MENU / MARQUEE RESTORATION
 // ============================================================
 document.addEventListener('DOMContentLoaded', () => {
 
-  // Fetch GitHub Sticky Note Activity
-  fetchGithubActivity();
+  // Fetch Live Dual Activity
+  fetchLatestCombinedActivity();
 
   // Desktop Selection Marquee
   const desktop = document.getElementById('desktop');
@@ -353,9 +374,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ============================================================
-  // STRICT WINDOW DRAG BOUNDARY CLAMPING (CANNOT ESCAPE VIEWPORT)
-  // ============================================================
+  // Window Dragging & Viewport Clamping
   document.querySelectorAll('.xp-window').forEach(win => {
     const titleBar = win.querySelector('.title-bar');
     if (!titleBar) return;
@@ -381,11 +400,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const winWidth = win.offsetWidth;
       const winHeight = win.offsetHeight;
 
-      // Calculate desired position
       let newLeft = e.clientX - offsetX;
       let newTop = e.clientY - offsetY;
 
-      // STRICT CLAMPING BOUNDARIES
       const maxLeft = desktopRect.width - winWidth;
       const maxTop = desktopRect.height - winHeight;
 
@@ -401,7 +418,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Context Menu Handling
+  // RESTORED CUSTOM RIGHT-CLICK CONTEXT MENU
   const globalCtxMenu = document.getElementById('global-context-menu');
   const linkMenuGroup = document.getElementById('link-menu-group');
   let targetUrl = '';
@@ -464,8 +481,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // Click Sound Handler
-  const clickSound = new Audio("click.mp3");
+  // Audio Handler
+  const clickSound = new Audio("assets/audio/click.mp3");
   const base64Click = new Audio("data:audio/wav;base64,UklGRl9vAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YUtvAACAgICAgICAgICAgICAgICAgICAgICAgICA3p2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ2dnZ3Gvampqa3GzMbG3eTdy/Dy493k59/o5eXm6ODq6efm5+3v8/X2+f39");
   clickSound.volume = 0.4;
   base64Click.volume = 0.3;
@@ -494,9 +511,29 @@ function updateClock() {
   }
 }
 
-// Form Handler
-function handleFormSubmit(e) {
+// Form Handler (AJAX Formspree)
+async function handleFormSubmit(e) {
   e.preventDefault();
-  alert("Thank you, Muhammad Abbas Jhanjhi has received your message!");
-  e.target.reset();
+  const form = e.target;
+  const data = new FormData(form);
+
+  try {
+    const response = await fetch(form.action, {
+      method: 'POST',
+      body: data,
+      headers: {
+        'Accept': 'application/json'
+      }
+    });
+
+    if (response.ok) {
+      alert("Thank you! Your message has been sent directly to Muhammad Abbas Jhanjhi.");
+      form.reset();
+    } else {
+      const errData = await response.json();
+      alert(`Submission error: ${errData.errors ? errData.errors[0].message : 'Check Formspree Endpoint'}`);
+    }
+  } catch (error) {
+    alert("Network error. Please try again later.");
+  }
 }

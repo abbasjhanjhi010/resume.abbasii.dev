@@ -4,15 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <!-- TAB TITLE -->
   <title>Muhammad Abbas Jhanjhi - Portfolio OS</title>
   
-  <!-- FAVICON -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%230058e6'/><rect x='2' y='2' width='28' height='28' rx='4' fill='none' stroke='%232b88f0' stroke-width='2'/><text x='16' y='22' font-family='W95FA, Tahoma, sans-serif' font-weight='bold' font-size='14' fill='white' text-anchor='middle'>MJ</text></svg>">
   
   <link rel="stylesheet" href="style.css">
+
 </head>
-<body oncontextmenu="return false;">
+<body>
 
   <!-- DESKTOP WORKSPACE -->
   <div id="desktop">
@@ -20,16 +19,17 @@
     <!-- DESKTOP SELECTION MARQUEE BOX -->
     <div id="selection-box"></div>
 
-    <!-- SEPARATE STICKY NOTE: "WHERE I WAS LAST SEEN" (LIVE GITHUB ACTIVITY) -->
+    <!-- STICKY NOTE: "WHERE I WAS LAST SEEN" -->
     <div id="activity-sticky-note" class="sticky-note">
       <div class="sticky-pin">📌</div>
       <div class="sticky-header">WHERE I WAS LAST SEEN</div>
       <div class="sticky-content" id="sticky-activity-body">
         <p class="sticky-loading">⏳ Checking GitHub activity...</p>
+        <p class="sticky-loading">⏳ Checking YouTube activity...</p>
       </div>
     </div>
 
-    <!-- LOW-RES CHUNKY PIXEL DESKTOP ICONS -->
+    <!-- DESKTOP ICONS -->
     <div class="desktop-icons">
       
       <!-- GITHUB ICON -->
@@ -90,7 +90,7 @@
 
 
     <!-- ============================================================
-         1. HOME WINDOW (DECLUTTERED & REFINED)
+         1. HOME WINDOW (Home.html)
          ============================================================ -->
     <div id="win-home" class="xp-window theme-home active" style="top: 20px; left: 160px; width: 680px;">
       <div class="title-bar" data-win-id="win-home">
@@ -126,7 +126,6 @@
           <p>I build scalable, modern web applications with functional user interfaces and robust system architectures.</p>
         </div>
 
-        <!-- QUICK LAUNCH NAVIGATION BAR -->
         <div class="quick-launch-bar">
           <span class="launch-label">🚀 QUICK LAUNCH:</span>
           <button class="xp-btn launch-btn" onclick="openWindow('win-projects')">⚙️ Open Projects.exe</button>
@@ -135,7 +134,6 @@
           <button class="xp-btn launch-btn" onclick="openWindow('win-contact')">✉️ Open Contact.exe</button>
         </div>
 
-        <!-- REPLACED DUPLICATE CARDS WITH NON-REPETITIVE OBJECTIVES -->
         <div class="card">
           <h3>🎯 Core Focus & Software Philosophy</h3>
           <p>Passionate about full-stack engineering, algorithmic efficiency, and crafting intuitive user-centric applications. Currently focusing on modern JavaScript frameworks, systems programming in Python, and database architectures.</p>
@@ -146,7 +144,7 @@
           <div class="cmd-body">
             <p><span class="cmd-prompt">C:\></span> sys_init --verbose</p>
             <p><span class="cmd-ok">[SYS_OK]</span> Portfolio OS v2.0 loaded successfully.</p>
-            <p><span class="cmd-log">[GIT_LOG]</span> Dynamic drag boundaries and live activity widget enabled.</p>
+            <p><span class="cmd-log">[GIT_LOG]</span> Clamped window bounds and restored context menu interactions.</p>
             <p><span class="cmd-log">[STATUS]</span> Currently pursuing Bs Computer Science @ Sunway University.</p>
             <p><span class="cmd-prompt">C:\></span> <span class="cmd-cursor">_</span></p>
           </div>
@@ -157,7 +155,7 @@
 
 
     <!-- ============================================================
-         2. PROJECTS WINDOW (FIXED LAYOUT)
+         2. PROJECTS WINDOW (Projects.exe)
          ============================================================ -->
     <div id="win-projects" class="xp-window theme-projects" style="top: 50px; left: 220px; width: 620px;">
       <div class="title-bar" data-win-id="win-projects">
@@ -203,7 +201,7 @@
 
 
     <!-- ============================================================
-         3. SKILLS WINDOW
+         3. SKILLS WINDOW (TechStack.dll)
          ============================================================ -->
     <div id="win-skills" class="xp-window theme-skills" style="top: 70px; left: 260px; width: 600px;">
       <div class="title-bar" data-win-id="win-skills">
@@ -284,7 +282,7 @@
 
 
     <!-- ============================================================
-         4. RESUME WINDOW
+         4. RESUME WINDOW (Resume.txt)
          ============================================================ -->
     <div id="win-resume" class="xp-window theme-resume" style="top: 90px; left: 300px; width: 560px;">
       <div class="title-bar" data-win-id="win-resume">
@@ -328,7 +326,7 @@
 
 
     <!-- ============================================================
-         5. GALLERY WINDOW
+         5. GALLERY WINDOW (SpecialEvents.dir)
          ============================================================ -->
     <div id="win-gallery" class="xp-window theme-gallery" style="top: 110px; left: 340px; width: 520px;">
       <div class="title-bar" data-win-id="win-gallery">
@@ -359,7 +357,7 @@
 
 
     <!-- ============================================================
-         6. CONTACT WINDOW
+         6. CONTACT WINDOW (Contact.exe)
          ============================================================ -->
     <div id="win-contact" class="xp-window theme-contact" style="top: 130px; left: 380px; width: 480px;">
       <div class="title-bar" data-win-id="win-contact">
@@ -377,7 +375,7 @@
           <p><strong>Location:</strong> Sunway University, Malaysia</p>
         </div>
 
-        <form class="retro-form" action="https://formspree.io/f/YOUR_ACTUAL_FORMSPREE_ID" method="POST" onsubmit="handleFormSubmit(event)">
+        <form class="retro-form" action="https://formspree.io/f/xbjnqwe" method="POST" onsubmit="handleFormSubmit(event)">
           <div class="form-group">
             <label for="form-name">Your Name:</label>
             <input type="text" id="form-name" name="name" required placeholder="John Doe">
