@@ -141,8 +141,11 @@ function navigateIeTo(url, brandType, isRepo = false, owner = '', repo = '') {
   }
 }
 
-function goBackIe() {
+
+// LETS THE USER GO BACK TO GITHUB PROFILE PAGE WITHOUT EVER LOADING IT
+function goBackIe() {   
   if (ieHistoryIndex > 0) {
+    // Standard back navigation through history stack
     ieHistoryIndex--;
     const state = ieHistoryStack[ieHistoryIndex];
     
@@ -154,6 +157,10 @@ function goBackIe() {
     } else {
       renderIeProfileContent(state.brandType);
     }
+  } else {
+    // FALLBACK: If at the start of history (e.g. opened repo directly from Projects.exe),
+    // navigate back to the main GitHub profile page!
+    navigateIeTo('https://github.com/abbas-jhanjhi', 'github', false);
   }
 }
 
@@ -174,7 +181,14 @@ function goForwardIe() {
 }
 
 function openInRetroBrowser(url, brandType) {
-  navigateIeTo(url, brandType);
+  const cleanPath = url.replace(/^https?:\/\/(www\.)?github\.com\//, '');
+  const parts = cleanPath.split('/').filter(Boolean);
+
+  if (brandType === 'github' && parts.length >= 2) {
+    navigateIeTo(url, 'github', true, parts[0], parts[1]);
+  } else {
+    navigateIeTo(url, brandType, false);
+  }
   openWindow('win-ie');
 }
 
@@ -196,7 +210,45 @@ async function renderIeProfileContent(type) {
   const title = document.getElementById('ie-window-title');
   if (!container || !title) return;
 
-  if (type === 'youtube') {
+  if (type === 'github') {
+    title.innerText = '🌐 C:\\Program Files\\Internet Explorer\\iexplore.exe - GitHub Profile';
+    container.innerHTML = `
+      <div style="padding: 10px; font-family: Tahoma, sans-serif;">
+        <div class="brand-profile-header brand-github">
+          <div class="profile-avatar-circle">🐙</div>
+          <div class="profile-details">
+            <h3 style="margin:0; font-size:14px;">Abbas Jhanjhi (@muhammadabbas010)</h3>
+            <p style="margin:4px 0 0 0; font-size:11px; opacity:0.9;">Computer Science Student @ Sunway University | Full-Stack & Systems Developer</p>
+          </div>
+        </div>
+        
+        <div style="margin: 10px 0; text-align: right;">
+          <a class="xp-btn" href="https://github.com/muhammadabbas010" target="_blank" rel="noopener noreferrer" style="font-weight: bold; padding: 4px 10px; text-decoration: none; display: inline-block;">
+            🌐 Open GitHub Profile on Web ►
+          </a>
+        </div>
+
+        <h3 style="margin: 12px 0 8px 0; font-size: 13px;">📦 Featured Repositories</h3>
+        <div class="brand-card-grid" style="display: flex; gap: 10px;">
+          <div class="brand-item-card" style="flex: 1; padding: 8px; border: 1px solid #7f9db9; border-radius: 3px; background: #fff;">
+            <h4 style="margin:0 0 6px 0; color:#003399; font-size:12px;">Athena Cafe</h4>
+            <p style="font-size:11px; margin:0 0 10px 0; color:#333; line-height:1.3;">A productivity web app inspired by a Turkish Greek coffee shop.</p>
+            <button class="xp-btn" onclick="navigateIeTo('https://github.com/MuhammadAbbas010/Athena-Cafe', 'github', true, 'MuhammadAbbas010', 'Athena-Cafe')" style="font-size:11px; font-weight:bold;">
+              Inspect Repo
+            </button>
+          </div>
+
+          <div class="brand-item-card" style="flex: 1; padding: 8px; border: 1px solid #7f9db9; border-radius: 3px; background: #fff;">
+            <h4 style="margin:0 0 6px 0; color:#003399; font-size:12px;">Python Content Calendar</h4>
+            <p style="font-size:11px; margin:0 0 10px 0; color:#333; line-height:1.3;">Text–based social media planner and analytics tool.</p>
+            <button class="xp-btn" onclick="navigateIeTo('https://github.com/MuhammadAbbas010/CSC1024-Social-Media-Planner', 'github', true, 'MuhammadAbbas010', 'CSC1024-Social-Media-Planner')" style="font-size:11px; font-weight:bold;">
+              Inspect Repo
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  } else if (type === 'youtube') {
     title.innerText = '🌐 C:\\Program Files\\Internet Explorer\\iexplore.exe - YouTube Channel';
     container.innerHTML = `<p style="font-size:12px;">⏳ Connecting to YouTube Data API v3...</p>`;
 
@@ -276,40 +328,7 @@ async function renderIeProfileContent(type) {
         </div>
       `;
     }
-  } else if (type === 'github') {
-  title.innerText = '🌐 C:\\Program Files\\Internet Explorer\\iexplore.exe - GitHub Profile';
-  container.innerHTML = `
-    <div style="padding: 10px; font-family: Tahoma, sans-serif;">
-      <div class="brand-profile-header brand-github">
-        <div class="profile-avatar-circle">🐙</div>
-        <div class="profile-details">
-          <h3>Muhammad Abbas Jhanjhi (@abbas-jhanjhi)</h3>
-          <p>Computer Science Student @ Sunway University | Full-Stack & Systems Developer</p>
-        </div>
-      </div>
-      
-      <div style="margin: 10px 0; text-align: right;">
-        <a class="xp-btn" href="https://github.com/abbas-jhanjhi" target="_blank" rel="noopener noreferrer" style="font-weight: bold; padding: 4px 10px; text-decoration: none;">
-          🌐 Open GitHub Profile on Web ►
-        </a>
-      </div>
-
-      <h3>📦 Featured Repositories</h3>
-      <div class="brand-card-grid" style="margin-top:10px;">
-        <div class="brand-item-card">
-          <h4>Athena Cafe</h4>
-          <p>A productivity web app inspired by a Turkish Greek coffee shop.</p>
-          <button class="xp-btn" onclick="navigateIeTo('https://github.com/MuhammadAbbas010/Athena-Cafe', 'github', true, 'MuhammadAbbas010', 'Athena-Cafe')">Inspect Repo</button>
-        </div>
-        <div class="brand-item-card">
-          <h4>Python Content Calendar</h4>
-          <p>Text-based social media planner and analytics tool.</p>
-          <button class="xp-btn" onclick="navigateIeTo('https://github.com/MuhammadAbbas010/CSC1024-Social-Media-Planner', 'github', true, 'MuhammadAbbas010', 'CSC1024-Social-Media-Planner')">Inspect Repo</button>
-        </div>
-      </div>
-    </div>
-  `;
-} else if (type === 'linkedin') {
+  } else if (type === 'linkedin') {
     title.innerText = '🌐 C:\\Program Files\\Internet Explorer\\iexplore.exe - LinkedIn Profile';
     container.innerHTML = `
       <div class="brand-profile-header brand-linkedin">
@@ -337,6 +356,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Fetch Live Dual Activity
   fetchLatestCombinedActivity();
+
+  // PREVENT BACKGROUND DESKTOP SCROLLING WHEN OVER XP WINDOWS
+  document.addEventListener('wheel', (e) => {
+    const scrollTarget = e.target.closest('.window-body, .cmd-body, .xp-window');
+    if (scrollTarget) {
+      const scrollTop = scrollTarget.scrollTop;
+      const scrollHeight = scrollTarget.scrollHeight;
+      const height = scrollTarget.clientHeight;
+      const delta = e.deltaY;
+
+      // Stop page body from scrolling
+      if ((delta > 0 && scrollTop + height >= scrollHeight) || (delta < 0 && scrollTop <= 0)) {
+        e.preventDefault();
+      }
+      e.stopPropagation();
+    }
+  }, { passive: false });
 
   // Desktop Selection Marquee
   const desktop = document.getElementById('desktop');
@@ -542,24 +578,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // LINK-SHORTCUT CLICK LISTENER (GITHUB REPO INSPECTOR)
+  // LINK-SHORTCUT CLICK LISTENER
   document.addEventListener('click', function (e) {
     const shortcut = e.target.closest('.link-shortcut');
     if (shortcut && !e.target.closest('#global-context-menu')) {
       const rawUrl = shortcut.getAttribute('data-url');
-      
-      if (rawUrl && rawUrl.includes('github.com/')) {
-        const cleanPath = rawUrl.replace(/^https?:\/\/(www\.)?github\.com\//, '');
-        const parts = cleanPath.split('/').filter(Boolean);
-        
-        if (parts.length >= 2) {
-          e.preventDefault();
-          const owner = parts[0];
-          const repo = parts[1];
+      const type = shortcut.getAttribute('data-type') || 'github';
 
-          openWindow('win-ie');
-          navigateIeTo(rawUrl, 'github', true, owner, repo);
-        }
+      if (rawUrl) {
+        e.preventDefault();
+        openInRetroBrowser(rawUrl, type);
       }
     }
   });
@@ -623,7 +651,7 @@ async function handleFormSubmit(e) {
 
 
 // ============================================================
-// GITHUB REPO INSPECTOR (SIDE-BY-SIDE DUAL COLUMN LAYOUT) - Now uses the back button on UI directly 
+// GITHUB REPO INSPECTOR (EXPANDED README + SMALLER COMMIT LOG)
 // ============================================================
 async function loadGitHubRepoData(owner, repo, windowContentId) {
   const container = document.getElementById(windowContentId);
@@ -659,7 +687,7 @@ async function loadGitHubRepoData(owner, repo, windowContentId) {
     container.innerHTML = `
       <div style="padding: 8px; font-family: Tahoma, sans-serif;">
         
-        <!-- TOP CALL-TO-ACTION BAR (CLEAN RIGHT ALIGNED) -->
+        <!-- TOP CALL-TO-ACTION BAR -->
         <div style="background: linear-gradient(to bottom, #0058e6, #00309c); padding: 6px 10px; border-radius: 3px; display: flex; justify-content: flex-end; align-items: center; margin-bottom: 8px; border: 1px solid #002080;">
           <a class="xp-btn" href="${repoData.html_url}" target="_blank" rel="noopener noreferrer" 
              style="background: linear-gradient(to bottom, #39d114, #1f8008); color: white; font-weight: bold; border: 1px solid #144e04; padding: 4px 12px; text-decoration: none; border-radius: 2px; text-shadow: 1px 1px 1px #000;">
