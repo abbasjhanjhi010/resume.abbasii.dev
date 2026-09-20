@@ -1,10 +1,5 @@
-# 🖥️ MuhammadAbbas.dev — Windows XP Portfolio OS
 
-A retro, interactive desktop operating system simulator built with vanillajs, HTML5, and CSS3. Designed as a personal portfolio for **Muhammad Abbas Jhanjhi** (Bs Computer Science @ Sunway University).
-
----
-
-## 📁 File Directory Map
+#### 📁 File Directory Map
 
 ```text
 MuhammadAbbas.dev/
