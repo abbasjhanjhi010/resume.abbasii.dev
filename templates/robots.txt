@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: /resume
+Disallow: /resume.pdf
 Allow: /
 Sitemap: {{ get_url(path="sitemap.xml") }}
