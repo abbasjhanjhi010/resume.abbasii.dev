@@ -11,7 +11,7 @@
     {
       packages = forAllSystems (pkgs: rec {
         default = pkgs.callPackage ./. { };
-        for-production = default.override { baseUrl = "https://oliver.ni/"; };
+        for-production = default.override { baseUrl = "https://resume.abbasii.dev/"; };
       });
 
       devShells = forAllSystems (pkgs: {

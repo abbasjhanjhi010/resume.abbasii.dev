@@ -1,7 +1,7 @@
 { lib, stdenvNoCC, just, tailwindcss_4, zola, baseUrl ? null }:
 
 stdenvNoCC.mkDerivation {
-  pname = "oliver.ni";
+  pname = "resume-abbasii-dev";
   version = "1.0.0";
 
   src = ./.;
