@@ -2,18 +2,21 @@
 
 {% block content %}
 
+{% set_global reveal_i = 0 %}
 {% for section in page.extra.sections %}
-<h1 class="text-3xl italic font-serif text-gray-600">{{ section.heading }}</h1>
+<h1 class="text-3xl italic font-serif text-gray-600 reveal-item" style="animation-delay: {{ 0.1 + reveal_i * 0.15 }}s;">{{ section.heading }}</h1>
+{% set_global reveal_i = reveal_i + 1 %}
 
 <div class="flex flex-col gap-6 leading-7 text-gray-700">
   {% for item in section.items %}
-  <div>
+  <div class="reveal-item" style="animation-delay: {{ 0.1 + reveal_i * 0.15 }}s;">
     <div class="font-semibold text-gray-900">{{ item.title }}</div>
     {% for subtitle in item.subtitles %}
     <div class="text-gray-500">{{ subtitle }}</div>
     {% endfor %}
     <div class="mt-1">{{ item.description }}</div>
   </div>
+  {% set_global reveal_i = reveal_i + 1 %}
   {% endfor %}
 </div>
 {% endfor %}

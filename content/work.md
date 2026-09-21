@@ -3,7 +3,7 @@ title = "Projects"
 template = "work.html"
 
 [[extra.sections]]
-heading = "Projects"
+heading = "Experience"
 
 [[extra.sections.items]]
 title = "Taylors International School - Student Council"
