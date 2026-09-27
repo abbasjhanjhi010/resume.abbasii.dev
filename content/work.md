@@ -24,6 +24,13 @@ bullets = [
   "Gathered policy feedback and showcased my results during weekly meetings",
 ]
 
+[[extra.sections]]
+heading = "Projects"
+
+[[extra.sections.items]]
+title = "[Pomorodo Desktop](https://github.com/abbasjhanjhi010/pomorodo-desktop)"
+subtitles = ["Typescript · Electron + Vite · MkDocs"]
+description = "Pomorodo desktop, compact, easy to install pomorodo app to keep you productive and your work streamlined."
 
 [[extra.sections]]
 heading = "Community"
@@ -32,12 +39,4 @@ heading = "Community"
 title = "Community title"
 subtitles = ["Technology Lead · December 2020 – Present", "Tournament Director · July – December 2025"]
 description = "Largest student-run math tournament in the world, reaching 4,000+ high school and middle school students annually."
-
-[[extra.sections]]
-heading = "Projects"
-
-[[extra.sections.items]]
-title = "[Pomorodo Desktop](https://github.com/abbasjhanjhi010/pomorodo-desktop)"
-subtitles = ["Typescript · Electron + Vite · MkDocs"]
-description = "Pomorodo desktop, compact, easy to install pomorodo app to keep you productive and your work streamlined."
 +++
