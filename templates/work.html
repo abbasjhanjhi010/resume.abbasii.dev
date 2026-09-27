@@ -4,17 +4,49 @@
 
 {% set_global reveal_i = 0 %}
 {% for section in page.extra.sections %}
-<h1 class="text-3xl italic font-serif text-gray-600 reveal-item" style="animation-delay: {{ 0.1 + reveal_i * 0.15 }}s;">{{ section.heading }}</h1>
+<h1 class="flex items-center gap-2 text-3xl italic font-serif text-gray-600 reveal-item" style="animation-delay: {{ 0.1 + reveal_i * 0.15 }}s;">
+  <img class="size-6 [image-rendering:pixelated]" src="/artworks/folderIcon.png" alt="" />
+  {{ section.heading }}
+</h1>
 {% set_global reveal_i = reveal_i + 1 %}
 
-<div class="flex flex-col gap-6 leading-7 text-gray-700">
+<div class="flex flex-col gap-6 leading-7 text-gray-700 [&_a]:text-link">
   {% for item in section.items %}
   <div class="reveal-item" style="animation-delay: {{ 0.1 + reveal_i * 0.15 }}s;">
-    <div class="font-semibold text-gray-900">{{ item.title }}</div>
-    {% for subtitle in item.subtitles %}
+    <div class="font-semibold text-gray-900">{{ item.title | markdown(inline=true) | safe }}</div>
+    {% for subtitle in item.subtitles | default(value=[]) %}
     <div class="text-gray-500">{{ subtitle }}</div>
     {% endfor %}
-    <div class="mt-1">{{ item.description }}</div>
+    {% if item.description %}
+    <div class="mt-1">{{ item.description | markdown(inline=true) | safe }}</div>
+    {% endif %}
+    {% if item.bullets %}
+    <ul class="mt-1 list-disc pl-5">
+      {% for bullet in item.bullets %}
+      <li>{{ bullet | markdown(inline=true) | safe }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+    {% if item.roles %}
+    <div class="mt-1">
+      {% for role in item.roles %}
+      <div class="relative pl-6 {% if not loop.first %}mt-3{% endif %}">
+        <span class="absolute left-0 top-[9px] size-2.5 rounded-full bg-gray-400"></span>
+        {% if not loop.last %}
+        <span class="absolute left-[4px] top-[19px] -bottom-[21px] w-0.5 bg-gray-200"></span>
+        {% endif %}
+        <div class="text-gray-500">{{ role.subtitle }}</div>
+        {% if role.bullets %}
+        <ul class="mt-1 list-disc pl-5">
+          {% for bullet in role.bullets %}
+          <li>{{ bullet | markdown(inline=true) | safe }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
   </div>
   {% set_global reveal_i = reveal_i + 1 %}
   {% endfor %}

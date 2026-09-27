@@ -1,6 +1,6 @@
 ### LICENSES 
 Code (```root/LICENSE.md```): MIT license \
-Artwork (```artworks/LICENSE.md```): CC BY 4.0 (Copyright©) 
+Artwork (```static/artworks/LICENSE.md```): CC BY 4.0 (Copyright©) 
 
 <br>
 
