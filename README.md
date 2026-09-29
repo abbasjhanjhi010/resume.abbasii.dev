@@ -1,3 +1,10 @@
+### LICENSES 
+Code (```root/LICENSE.md```): MIT license \
+Artwork (```static/artworks/LICENSE.md```): CC BY 4.0 (Copyright©) 
+
+<br>
+
+### Building the project
 Push to `main` triggers [.github/workflows/deploy.yaml](.github/workflows/deploy.yaml):
 
 1. `nix build .#for-production` — this is **not** the same as `zola build`. The `for-production` package in [flake.nix](flake.nix) overrides `base_url` to `https://resume.abbasii.dev/` at build time, overriding whatever's in `zola.toml`. If URLs look wrong in a deploy, check here first, not `zola.toml`.
