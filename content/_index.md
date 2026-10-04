@@ -13,7 +13,7 @@ Currently exploring — AI/ML fundamentals, TypeScript, Flask, FastAPI
 
 
 I'm currently looking for internships in computer science, if you're recruiting or wish to work together on something,
-hit me up on through [email](mailto:muhammadabbas1011@outlook.com)
+hit me up on through [email](mailto:abbasjhanjhi@gmail.com)
 or check out my [resume](resume.abbasii.dev).
 
 [Google]: https://google.com/
