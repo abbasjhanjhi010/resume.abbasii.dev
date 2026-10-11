@@ -1,7 +1,7 @@
 {% import "macros.html" as macros %}
 
 <!DOCTYPE html>
-<html lang="en" class="bg-gray-50">
+<html lang="en" class="bg-[#5B1B1D]">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -89,7 +89,16 @@
     </style>
   </head>
 
-  <body class="overflow-y-scroll flex flex-col min-h-screen p-4 pt-8 md:p-8 md:pt-16">
+  <body class="relative overflow-y-scroll flex flex-col min-h-screen text-cream p-4 pt-32 md:p-8 md:pt-44 lg:pt-16">
+    <a href="/" class="absolute top-0 left-0" aria-label="Muhammad Abbas Jhanjhi — home">
+      <img
+        class="w-28 md:w-36 lg:w-40 xl:w-56 h-auto"
+        src="/artworks/logo.png"
+        width="323"
+        height="296"
+        alt="Muhammad Abbas Jhanjhi logo"
+      />
+    </a>
     <div class="w-full max-w-[622px] flex-1 mx-auto flex flex-col gap-8">
       <header class="flex flex-col md:flex-row gap-2 md:gap-4 md:justify-between items-center">
         <a class="text-2xl font-semibold" href="/">Abbas Jhanjhi</a>
@@ -106,19 +115,19 @@
 
       <footer
         class="flex flex-col md:flex-row gap-2 items-center justify-center
-               text-sm text-gray-400 border-t border-gray-200 pt-6"
+               text-sm text-cream/60 border-t border-cream/25 pt-6"
       >
-        <a href="mailto:abbasjhanjhi@gmail.com" class="transition-colors hover:text-gray-600">
+        <a href="mailto:abbasjhanjhi@gmail.com" class="transition-colors hover:text-cream">
           <i class="bi bi-envelope-fill"></i> abbasjhanjhi@gmail.com
         </a>
         <span class="hidden md:inline">·</span>
-        <a href="https://github.com/abbasjhanjhi010" class="transition-colors hover:text-gray-600">
+        <a href="https://github.com/abbasjhanjhi010" class="transition-colors hover:text-cream">
           <i class="bi bi-github"></i> abbasjhanjhi010
         </a>
         <span class="hidden md:inline">·</span>
         <a
           href="https://www.linkedin.com/in/muhammadabbas-j/"
-          class="transition-colors hover:text-gray-600"
+          class="transition-colors hover:text-cream"
         >
           <i class="bi bi-linkedin"></i> muhammadabbas-j
         </a>
