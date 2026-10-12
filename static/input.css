@@ -2,6 +2,7 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
+  --color-cream: #F7EFE6;
   --font-sans: "Inter", sans-serif;
   --font-serif: "EB Garamond", serif;
 }
@@ -16,15 +17,28 @@
   text-decoration: none;
   font-weight: 500;
   transition: all 150ms ease-in-out;
-  box-shadow: inset 0 -0.4em var(--color-gray-200);
+  box-shadow: inset 0 -0.4em color-mix(in oklab, var(--color-cream) 20%, transparent);
 
   &:hover {
-    color: var(--color-blue-500);
-    box-shadow: inset 0 -0.6em var(--color-blue-100);
+    color: var(--color-cream);
+    box-shadow: inset 0 -0.6em color-mix(in oklab, var(--color-cream) 40%, transparent);
   }
 }
 
 @utility prose {
+  --tw-prose-body: color-mix(in oklab, var(--color-cream) 90%, transparent);
+  --tw-prose-headings: var(--color-cream);
+  --tw-prose-lead: var(--color-cream);
+  --tw-prose-links: var(--color-cream);
+  --tw-prose-bold: var(--color-cream);
+  --tw-prose-counters: color-mix(in oklab, var(--color-cream) 65%, transparent);
+  --tw-prose-bullets: color-mix(in oklab, var(--color-cream) 65%, transparent);
+  --tw-prose-hr: color-mix(in oklab, var(--color-cream) 25%, transparent);
+  --tw-prose-quotes: var(--color-cream);
+  --tw-prose-quote-borders: color-mix(in oklab, var(--color-cream) 25%, transparent);
+  --tw-prose-captions: color-mix(in oklab, var(--color-cream) 65%, transparent);
+  --tw-prose-code: var(--color-cream);
+
   a {
     @apply text-link;
   }
